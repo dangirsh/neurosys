@@ -6,6 +6,13 @@ NixOS + XMonad + Doom Emacs
 
 Currently testing on a remote Linode instance.
 
+** Inspirations
+
+- https://github.com/willbush/system
+- https://github.com/malloc47/config
+- https://github.com/jwiegley/nix-config
+- https://github.com/hlissner/dotfiles
+
 * Install
 
 ** Directory setup
