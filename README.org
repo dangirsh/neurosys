@@ -310,7 +310,6 @@ in {
   programs.ssh.startAgent = true;
 
   programs.x2goserver.enable = true;
-
 }
 #+END_SRC
 
@@ -331,6 +330,7 @@ in {
   imports = [
     ./settings.nix
   ];
+
 
   home.stateVersion = "20.03";
 
@@ -444,6 +444,16 @@ in {
     texlive.combined.scheme-tetex
   ];
 
+  programs.bash = {
+    enable = true;
+    historyFile = "${syncDir}/.config/bash/.bash_history";
+    sessionVariables = {
+      PATH = "\$PATH:${homeDir}/.emacs.d/bin/";
+    };
+    shellOptions = [
+    "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
+    "cmdhist" "nocaseglob" "histappend" "extglob"];
+  };
 
   programs.git = {
     enable = true;
@@ -451,7 +461,7 @@ in {
     userEmail = "${config.settings.email}";
   };
 
-  programs.direnv.enable = true;
+  # programs.direnv.enable = true;
 
   programs.ssh = {
     enable = true;
@@ -686,11 +696,13 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Fullscreen
 import XMonad.Actions.CycleWS (nextWS, prevWS, toggleWS)
 import XMonad.Util.Run (safeSpawnProg)
-import XMonad.Layout.Minimize
+import XMonad.Layout.Minimize  
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
+import XMonad.Actions.Minimize
 import XMonad.Actions.WindowGo (runOrRaise)
+import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 
 import qualified Data.Map as M
@@ -707,7 +719,7 @@ main = xmonad $
   -- , terminal = "emacs-vterm"
   , terminal = "xterm"
   , borderWidth = 2
-  , layoutHook = myLayoutHook $
+  , layoutHook = smartBorders $
                  avoidStruts $
                  minimize $
                  (ResizableTall 1 (3/100) (1/2) []
@@ -722,14 +734,14 @@ main = xmonad $
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
       setWMName "LG3D"
       windows $ W.greedyView "1"
-      spawn "~/.xmonad/startup-hook"
+      spawn "/home/dan/.emacs.d/bin/doom run"
   } `additionalKeys` myKeys
 
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
-myKeys XConfig {XMonad.modMask = m, terminal = term} = M.fromList $ [
+myKeys XConfig {XMonad.modMask = m} = M.fromList $ [
     ((m .|. shiftMask .|. mod1Mask, xK_r), safeSpawnProg "reboot")
-  , ((m,                            xK_p), safeSpawnProg "rofi -show drun -modi drun -show-icons -matching fuzzy"
-  , ((m,                            xK_b), safeSpawnProg "rofi -show window -show-icons -matching fuzzy"
+  , ((m,                            xK_p), safeSpawnProg "rofi -show drun -modi drun -show-icons -matching fuzzy")
+  , ((m,                            xK_b), safeSpawnProg "rofi -show window -show-icons -matching fuzzy")
   , ((m,                            xK_n), spawn "$EDITOR")
   , ((m .|. shiftMask,              xK_n), spawn "~/.emacs.d/bin/doom run")
   , ((m .|. shiftMask .|. mod1Mask, xK_t), sendMessage ToggleStruts)
@@ -741,8 +753,10 @@ myKeys XConfig {XMonad.modMask = m, terminal = term} = M.fromList $ [
   , ((m .|. shiftMask,              xK_k), nextWS)
   , ((m .|. shiftMask,              xK_h), sendMessage MirrorShrink)               --MirrorShrink the master area
   , ((m .|. shiftMask,              xK_l), sendMessage MirrorExpand)               --MirrorExpand the master area
-  , ((m,                            xK_m), withFocused minimizeWindow)             --Minimize window
-  , ((m .|. shiftMask,              xK_m), sendMessage RestoreNextMinimizedWin)    --Restore window
+  -- , ((m,                            xK_m), withFocused minimizeWindow)
+    --Minimize window
+  -- , ((m .|. shiftMask,              xK_m), sendMessage RestoreNextMinimizedWin)
+    --Restore window
   , ((m .|. shiftMask,              xK_f), fullFloatFocused)                       --Push window into full screen
   , ((m,                            xK_comma), toggleWS)                           --Toggle to the workspace displayed previously
   , ((m .|. shiftMask,              xK_Up), spawn "amixer sset Master 5%+")
@@ -765,3 +779,7 @@ myManageHook = composeAll . concat $
     ]
 #+end_src
 
+** TODO TODO
+
+- Cleanup window minimzation. Unlikely need to use both the =sendMessage= and the action.
+- steal best ideas from the [[https://www.youtube.com/watch?v=70IxjLEmomg&feature=emb_title][mother of all demos]]
