@@ -341,12 +341,12 @@ in {
 
   nixpkgs.overlays = [ emacs-overlay ];
 
-  # services.emacs.enable = true;
-  # programs.emacs = {
-  #   enable = true;
-  #   # Compile with imagemagick support so I can resize images.
-  #   # package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
-  # };
+  services.emacs.enable = true;
+  programs.emacs = {
+    enable = true;
+    # Compile with imagemagick support so I can resize images.
+    package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -426,7 +426,7 @@ in {
     # julia_13
 
     ## Doom dependencies
-    emacsGit
+    # emacsGit
 
     git
     (ripgrep.override {withPCRE2 = true;})
