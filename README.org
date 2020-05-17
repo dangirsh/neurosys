@@ -271,6 +271,9 @@ in {
 
   system.stateVersion = "20.03";
 
+
+  security.sudo.wheelNeedsPassword = false;
+
   users.mutableUsers = false;
 
   users.extraUsers.${config.settings.username} = {
