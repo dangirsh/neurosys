@@ -603,7 +603,23 @@ mapAttrs (_: spec:
 #+end_src
 
 
-* TODO Emacs Config
+* Emacs Config
+
+My [[https://github.com/mindlike/.doom.d][Doom Emacs Configuration]] + a forked [[https://github.com/dangirsh/doom-emacs][Doom Emacs]] are tracked here as git submodules.
+
+Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] are stable, I'm *not yet* tracking my Emacs packages / config in Nix. For now, I track known-good commits via submodules / [[https://github.com/raxod502/straight.el][straight.el]], and tie them to external dependencies (all managed by Nix) in this repo. If you know a better way to do this, please [[https://dangirsh.org/contact.html][let me know]].
+
+Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in sources.json above.
+
+Here, I just copy [[file:.emacs.d/][.emacs.d]] and [[file:.doom.d/][.doom.d]] into target's ~$HOME~.
+
+#+begin_src sh :async yes
+scp -r .emacs.d root@nixos-dev:/home/dan
+scp -r .doom.d root@nixos-dev:/home/dan
+#+end_src
+
+#+RESULTS:
+: a599c834bc24bab0546bb2d7c040da9d
 
 
 * XMonad
