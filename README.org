@@ -37,7 +37,7 @@ mkdir -p /etc/nixos/.xmonad
 nixos-rebuild switch
 #+end_src
 
-[[elisp:(save-excursion (find-file "/ssh:root@nixos-dev://")  (compile "nixos-rebuild switch"))][nixos-rebuild switch]]
+[[elisp:(progn (save-excursion (find-file "/ssh:root@nixos-dev://")  (compile "nixos-rebuild switch")) (switch-to-buffer "*compilation*"))][nixos-rebuild switch]]
 
 [[elisp:(find-file "/ssh:root@nixos-dev:/")][test]]
 
@@ -192,7 +192,7 @@ in {
     };
   };
 
-  virtualisation.docker.enable = true;
+  # virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
     coreutils
@@ -205,14 +205,12 @@ in {
     # docker-compose
     # ghcide-nix.ghcide-ghc865
     tree
-    gcc
     git
     killall
     unzip
     wget
     sshfs
     gnumake
-    inetutils
     mtr
     sysstat
     htop
@@ -261,6 +259,9 @@ in {
   ];
 
   programs.ssh.startAgent = true;
+
+  programs.x2goserver.enable = true;
+
 }
 #+END_SRC
 
@@ -289,12 +290,12 @@ in {
 
   nixpkgs.overlays = [ emacs-overlay ];
 
-  services.emacs.enable = true;
-  programs.emacs = {
-    enable = true;
-    # Compile with imagemagick support so I can resize images.
-    package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
-  };
+  # services.emacs.enable = true;
+  # programs.emacs = {
+  #   enable = true;
+  #   # Compile with imagemagick support so I can resize images.
+  #   # package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
+  # };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -619,7 +620,6 @@ scp -r .doom.d root@nixos-dev:/home/dan
 #+end_src
 
 #+RESULTS:
-: a599c834bc24bab0546bb2d7c040da9d
 
 
 * XMonad
