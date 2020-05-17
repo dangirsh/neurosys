@@ -13,7 +13,14 @@ Currently testing on a remote Linode instance.
 - https://github.com/jwiegley/nix-config
 - https://github.com/hlissner/dotfiles
 
-* Install
+** Helpful Resources
+
+- https://www.gwern.net/Choosing-Software
+- https://www.malloc47.com/migrating-to-nixos/
+- https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
+- https://christine.website/blog/nixos-desktop-flow-2020-04-25
+
+* Deployment
 
 ** Directory setup
 
