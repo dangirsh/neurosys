@@ -56,14 +56,14 @@ mkdir -p /etc/nixos/.xmonad
 
 #+RESULTS:
 
-[[elisp:(find-file "/ssh:root@nixos-dev:/")][test]]
+* Host setup
 
-* Install NixOS
+** Install NixOS
 
 Followed:
 https://www.linode.com/docs/tools-reference/custom-kernels-distros/install-nixos-on-linode/
 
-* Add channels
+** Add channels
 
 One the Linode instance
 
@@ -110,6 +110,33 @@ nix-channel update
   nix.maxJobs = lib.mkDefault 1;
 }
 #+end_src
+** settings.nix
+
+#+BEGIN_SRC nix :tangle /ssh:root@nixos-dev:/etc/nixos/settings.nix :comments link
+{config, pkgs, lib, ...}:
+
+with lib;
+
+{
+  options = {
+    settings = {
+      name = mkOption {
+        default = "Dan Girshovich";
+        type = with types; uniq str;
+      };
+      username = mkOption {
+        default = "dan";
+        type = with types; uniq str;
+      };
+      email = mkOption {
+        default = "dan.girsh@gmail.com";
+        type = with types; uniq str;
+      };
+    };
+  };
+}
+
+#+END_SRC
 
 ** configuration.nix
 
@@ -246,12 +273,12 @@ in {
 
   users.mutableUsers = false;
 
-  users.extraUsers.dan = {
+  users.extraUsers.${config.settings.username} = {
     isNormalUser = true;
     uid = 1000;
     createHome = true;
-    home = "/home/dan";
-    description = "Dan Girshovich";
+    home = "/home/${config.settings.username}";
+    description = "${config.settings.name}";
     extraGroups = [
       "audio"
       "networkmanager"
@@ -271,7 +298,7 @@ in {
     passwordAuthentication = false;
   };
 
-  users.users.dan.openssh.authorizedKeys.keys = [
+  users.users.${config.settings.username}.openssh.authorizedKeys.keys = [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
   ];
 
@@ -296,7 +323,9 @@ let
   nixos20_03 = import sources."nixpkgs-20.03" { };
   emacs-overlay = import (import ./nix/sources.nix)."emacs-overlay";
 in {
-  imports = [ ];
+  imports = [
+    ./settings.nix
+  ];
 
   home.stateVersion = "20.03";
 
@@ -410,10 +439,11 @@ in {
     texlive.combined.scheme-tetex
   ];
 
+
   programs.git = {
     enable = true;
-    userName = "Dan Girshovich";
-    userEmail = "dan.girsh@gmail.com";
+    userName = "${config.settings.name}";
+    userEmail = "${config.settings.email}";
   };
 
   programs.direnv.enable = true;
