@@ -29,22 +29,32 @@ mkdir -p /etc/nixos/nix
 mkdir -p /etc/nixos/.xmonad
 #+end_src
 
-** Tangle
+** Deploy
 
 #+begin_src emacs-lisp
-(org-babel-tangle)
+(defun neurosys/deploy ()
+  (interactive)
+  (save-window-excursion
+    (org-babel-tangle)
+    ;; TODO: Is there cleaner way to compile over TRAMP?
+    (find-file "/ssh:root@nixos-dev://")
+    (compile "nixos-rebuild switch")))
 #+end_src
 
 #+RESULTS:
-| /ssh:root@nixos-dev:/etc/nixos/.xmonad/xmonad.hs | /ssh:root@nixos-dev:/etc/nixos/nix/sources.json | /ssh:root@nixos-dev:/etc/nixos/nix/sources.nix | /ssh:root@nixos-dev:/etc/nixos/home.nix | /ssh:root@nixos-dev:/etc/nixos/configuration.nix | /ssh:root@nixos-dev:/etc/nixos/hardware-configuration.nix |
+: neurosys/deploy
 
-** Build
+** Doom Keybindings
 
-#+begin_src sh :dir /ssh:root@nixos-dev:/root/ :async yes :results output
-nixos-rebuild switch
+#+begin_src emacs-lisp
+(map!
+   :map org-mode-map
+   :localleader
+   (:prefix ("s" . "Neurosys")
+     :desc "Deploy" "d" #'neurosys/deploy))
 #+end_src
 
-[[elisp:(progn (save-excursion (find-file "/ssh:root@nixos-dev://")  (compile "nixos-rebuild switch")) (switch-to-buffer "*compilation*"))][nixos-rebuild switch]]
+#+RESULTS:
 
 [[elisp:(find-file "/ssh:root@nixos-dev:/")][test]]
 
