@@ -3,7 +3,7 @@
 #+author: Dan Girshovich
 #+email: dan.girsh@gmail.com
 #+startup: hideblocks align entitiespretty
-
+#+options: toc:2
 
 * About
 
