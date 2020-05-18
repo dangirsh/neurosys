@@ -112,7 +112,7 @@ nix-channel update
 
 * Emacs Config
 
-My [[https://github.com/mindlike/.doom.d][Doom Emacs Configuration]] + a forked [[https://github.com/dangirsh/doom-emacs][Doom Emacs]] are tracked here as git submodules.
+My [[https://github.com/mindlike/.doom.d][Doom Emacs Configuration]] is [[file:home/.doom.d/][tracked here]] as a git submodules.
 
 Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] are stable, I'm *not yet* tracking my Emacs packages / config in Nix. For now, I track known-good commits via submodules / [[https://github.com/raxod502/straight.el][straight.el]], and tie them to external dependencies (all managed by Nix) in this repo. If you know a better way to do this, please [[https://dangirsh.org/contact.html][let me know]].
 
