@@ -22,10 +22,9 @@ Currently testing on a remote Linode instance.
 
 * Deployment
 
-
 #+begin_src emacs-lisp
-(defun neurosys/deploy ()
-  (interactive)
+(defun neurosys/deploy-to-host (host)
+  (interactive "sHost:")
   (let* ((host "root@nixos-dev")
          (host-root (format "/ssh:%s:/" host)))
     (save-window-excursion
@@ -35,10 +34,13 @@ Currently testing on a remote Linode instance.
       (find-file host-root)
       (compile "nixos-rebuild switch")))
   (switch-to-buffer-other-window "*compilation*"))
+
+(defun neurosys/deploy-to-nixos-dev ()
+  (neurosys/deploy-to-host "root@nixos-dev"))
 #+end_src
 
 #+RESULTS:
-: neurosys/deploy
+: neurosys/deploy-to-nixos-dev
 
 *** Doom Keybindings
 
@@ -47,7 +49,7 @@ Currently testing on a remote Linode instance.
    :map org-mode-map
    :localleadern
    (:prefix ("s" . "Neurosys")
-     :desc "Deploy" "d" #'neurosys/deploy))
+     :desc "Deploy" "d" #'neurosys/deploy-to-nixos-dev))
 #+end_src
 
 #+RESULTS:
