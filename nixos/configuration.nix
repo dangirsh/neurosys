@@ -10,6 +10,8 @@ in {
       "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.03.tar.gz}/nixos"
     ];
 
+  system.stateVersion = "20.03";
+
   nixpkgs.config = {
     # Allow unfree, which is required for some drivers.
     allowUnfree = true;
@@ -94,23 +96,13 @@ in {
   # virtualisation.docker.enable = true;
 
   environment.systemPackages = with pkgs; [
-    coreutils
-    binutils
-    curl
-    wget
-    zip
-    unzip
-    # docker
-    # docker-compose
-    # ghcide-nix.ghcide-ghc865
-    tree
+    coreutils binutils
+    curl wget
+    zip unzip
     git
     killall
-    unzip
-    wget
     sshfs
-    gnumake
-    mtr
+    mtr # traceroute
     sysstat
     htop
   ];
@@ -123,10 +115,6 @@ in {
       hack-font
     ];
   };
-
-  system.stateVersion = "20.03";
-
-  # services.xserver.autorun = true;
 
   security.sudo.wheelNeedsPassword = false;
 
@@ -163,6 +151,6 @@ in {
 
   programs.ssh.startAgent = true;
 
-  programs.x2goserver.enable = true;
+  # programs.x2goserver.enable = true;
 }
 # configuration.nix:1 ends here

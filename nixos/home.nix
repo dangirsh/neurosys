@@ -12,7 +12,6 @@ in {
     ./settings.nix
   ];
 
-
   home.stateVersion = "20.03";
 
   nixpkgs.config = {
@@ -56,56 +55,23 @@ in {
   xdg.enable = true;
 
   home.packages = with pkgs; [
-    # Haskell dev
-    # haskellPackages.ghcid
-    # haskellPackages.hakyll
-    # haskellPackages.hasktags
-    # haskellPackages.hlint
-    # haskellPackages.hoogle
-    # haskellPackages.hpack
-    # cabal-install
-    # stable.haskellPackages.apply-refact # used by hlint-refactor
-    # stable.haskellPackages.brittany
-
-    # cabal2nix
-    # cachix
-    # nix-prefetch-git
-    # nixfmt
-
     rofi
-
     gnupg
-
-    pavucontrol
     # syncthing-cli # provides stcli
-    # vlc
-    xdotool
 
     (pass.withExtensions (exts: [
       exts.pass-otp
       exts.pass-genphrase
     ]))
 
-    gitAndTools.hub
-
     firefox-beta-bin
-    # firefox-bin
 
     # direnv
-
-    # sbcl
-    # lispPackages.quicklisp
-
-    # clojure
-    # joker
-    # leiningen
 
     julia_13
 
     ## Doom dependencies
-    # emacsGit
 
-    git
     (ripgrep.override {withPCRE2 = true;})
     gnutls              # for TLS connectivity
 
@@ -124,9 +90,7 @@ in {
   programs.bash = {
     enable = true;
     historyFile = "${syncDir}/.config/bash/.bash_history";
-    sessionVariables = {
-      PATH = "\$PATH:${homeDir}/.emacs.d/bin/";
-    };
+    # FIXME: Document and reduce these
     shellOptions = [
     "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
     "cmdhist" "nocaseglob" "histappend" "extglob"];

@@ -1,4 +1,4 @@
--- [[file:~/repos/neurosys/README.org::*XMonad][XMonad:1]]
+-- [[file:~/repos/neurosys/README.org::*Imports][Imports:1]]
 import XMonad
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
@@ -19,8 +19,9 @@ import XMonad.Layout.NoFrillsDecoration (noFrillsDeco, shrinkText,
 import Data.Monoid
 import Data.Default (def)
 import Data.Map as M (fromList,union, Map())
+-- Imports:1 ends here
 
-
+-- [[file:~/repos/neurosys/README.org::*Main][Main:1]]
 main :: IO ()
 main = xmonad $
   withUrgencyHook NoUrgencyHook $
@@ -46,7 +47,9 @@ main = xmonad $
       setWMName "LG3D"
       windows $ W.greedyView "1"
   }
+-- Main:1 ends here
 
+-- [[file:~/repos/neurosys/README.org::*Keybindings][Keybindings:1]]
 myKeys :: XConfig t -> M.Map (KeyMask, KeySym) (X ())
 myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   -- System
@@ -87,8 +90,9 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
     where
         fullFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
+-- Keybindings:1 ends here
 
-
+-- [[file:~/repos/neurosys/README.org::*Asthetics][Asthetics:1]]
 red     = "#dc322f"
 blue    = "#268bd2"
 yellow  = "#b58900"
@@ -106,4 +110,4 @@ topBarTheme = def
     , urgentTextColor       = yellow
     , decoHeight            = 5
     }
--- XMonad:1 ends here
+-- Asthetics:1 ends here
