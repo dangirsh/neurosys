@@ -1,5 +1,7 @@
 #! /usr/bin/env bash
 
+set -vex
+
 NEUROSYS_HOME="$(dirname "$(readlink -f "$0")")"/home
 
 # # rsync -Pav --rsync-path="sudo rsync" nixos/ /etc/nixos/
