@@ -12,7 +12,7 @@ The state of my neurosys includes configuraiton for:
 - [[https://nixos.org/][NixOS]]
 - [[https://xmonad.org/][XMonad]]
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] 
-  - a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities like deploying to remote servers.
+  - Including a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities like deploying to remote servers.
 
 Together, these fully define a *minimal and reproducible computing environment*.
 
