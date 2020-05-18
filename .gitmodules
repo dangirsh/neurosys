@@ -1,6 +1,6 @@
 [submodule ".doom.d"]
-	path = .doom.d
+	path = home/.doom.d
 	url = git@github.com:dangirsh/.doom.d.git
 [submodule ".emacs.d"]
-	path = .emacs.d
+	path = home/.emacs.d
 	url = git@github.com:dangirsh/doom-emacs.git
