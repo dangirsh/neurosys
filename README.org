@@ -37,14 +37,21 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
 
 * Deployment
 
+Run [[elisp:(neurosys/deploy-to-host)][neurosys/deploy-to-host]], which will tangle this file and =rsync= the results to a specified host.
+
+** Rsync Script
+
 #+begin_src sh :tangle rsync.sh :tangle-mode (identity #o775)
 HOST=$1
+HOST_HOME=$2
 
 rsync -Pav --rsync-path="sudo rsync" nixos/ $HOST:/etc/nixos/
-rsync -Pav home/ $HOST:/home/dan/
+rsync -Pav home/ $HOST:$HOST_HOME
 #+end_src
 
-[[elisp:(neurosys/deploy-to-host "root@nixos-dev")][Deploy to nixos-dev]]
+** Quick deploy links :noexport:
+
+[[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
 
 * Host setup
 
