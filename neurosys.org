@@ -15,7 +15,7 @@ The state of my neurosys includes:
 
 Together, these fully define a minimal and reproducible computing environment.
 
-[[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[http://cachestocaches.com/2018/6/org-literate-programming/][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are the only two source files.
+[[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are the only two source files.
 
 There's also small [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][Doom Emacs module]] with additional utilities, including one for deploying neurosys as a remote development environment.
 
