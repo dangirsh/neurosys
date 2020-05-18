@@ -1,5 +1,3 @@
-#! /usr/bin/env bash
-
 HOST=$1
 
 rsync -Pav --rsync-path="sudo rsync" nixos/ $HOST:/etc/nixos/

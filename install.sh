@@ -1,5 +1,3 @@
-#! /usr/bin/env bash
-
 set -vex
 
 NEUROSYS_HOME="$(dirname "$(readlink -f "$0")")"/home
