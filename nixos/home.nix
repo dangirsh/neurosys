@@ -1,4 +1,4 @@
-# [[file:~/repos/neurosys/README.org::*home.nix][home.nix:1]]
+# [[file:~/repos/neurosys/README.org::*User-level Config][User-level Config:1]]
 { config, pkgs, ... }:
 
 let
@@ -164,4 +164,4 @@ in {
   # services.syncthing.enable = true;
   # services.lorri.enable = true;
 }
-# home.nix:1 ends here
+# User-level Config:1 ends here

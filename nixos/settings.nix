@@ -1,4 +1,4 @@
-# [[file:~/repos/neurosys/README.org::*settings.nix][settings.nix:1]]
+# [[file:~/repos/neurosys/README.org::*Global Constants][Global Constants:1]]
 {config, pkgs, lib, ...}:
 
 with lib;
@@ -21,4 +21,4 @@ with lib;
     };
   };
 }
-# settings.nix:1 ends here
+# Global Constants:1 ends here

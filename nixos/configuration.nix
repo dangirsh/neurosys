@@ -1,4 +1,4 @@
-# [[file:~/repos/neurosys/README.org::*configuration.nix][configuration.nix:1]]
+# [[file:~/repos/neurosys/README.org::*System-level Config][System-level Config:1]]
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
@@ -153,4 +153,4 @@ in {
 
   # programs.x2goserver.enable = true;
 }
-# configuration.nix:1 ends here
+# System-level Config:1 ends here
