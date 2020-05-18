@@ -49,7 +49,7 @@ rsync -Pav --rsync-path="sudo rsync" nixos/ $HOST:/etc/nixos/
 rsync -Pav home/ $HOST:$HOST_HOME
 #+end_src
 
-** Quick deploy links :noexport:
+** COMMENT Quick deploy links
 
 [[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
 
