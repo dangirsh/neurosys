@@ -18,8 +18,7 @@ in {
   nix = {
     useSandbox = true;
     autoOptimiseStore = true;
-    # FIXME: Update this after moving to dev server.
-    # maxJobs = 1; # should be 1 per CPU logical core
+    maxJobs = 3; # should be 1 per CPU logical core
     # binaryCaches = [
     #   "https://cache.nixos.org/"
     #   "https://ghcide-nix.cachix.org"

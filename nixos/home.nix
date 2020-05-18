@@ -100,7 +100,7 @@ in {
     # joker
     # leiningen
 
-    # julia_13
+    julia_13
 
     ## Doom dependencies
     # emacsGit
