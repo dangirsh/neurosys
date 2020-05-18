@@ -5,6 +5,30 @@
 #+startup: hideblocks align entitiespretty
 #+options: toc:2
 
+* Table of Contents :TOC_4:
+- [[#about][About]]
+  - [[#inspirations][Inspirations]]
+  - [[#helpful-resources][Helpful Resources]]
+- [[#deployment][Deployment]]
+  - [[#rsync-script][Rsync Script]]
+- [[#host-setup][Host setup]]
+  - [[#install-nixos][Install NixOS]]
+  - [[#add-channels][Add channels]]
+    - [[#stable][Stable]]
+    - [[#unstable][Unstable]]
+- [[#emacs-config][Emacs Config]]
+- [[#xmonad][XMonad]]
+  - [[#imports][Imports]]
+  - [[#main][Main]]
+  - [[#keybindings][Keybindings]]
+  - [[#asthetics][Asthetics]]
+- [[#nixos-config][Nixos Config]]
+  - [[#system-level-config][System-level Config]]
+  - [[#user-level-config][User-level Config]]
+  - [[#global-constants][Global Constants]]
+  - [[#hardware-specific-config][Hardware-specific Config]]
+  - [[#version-pinning][Version Pinning]]
+
 * About
 
 The state of my neurosys includes configuraiton for:
@@ -34,30 +58,6 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
 - https://www.malloc47.com/migrating-to-nixos/
 - https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
 - https://christine.website/blog/nixos-desktop-flow-2020-04-25
-
-* Table of Contents :TOC_4:
-- [[#about][About]]
-  - [[#inspirations][Inspirations]]
-  - [[#helpful-resources][Helpful Resources]]
-- [[#deployment][Deployment]]
-  - [[#rsync-script][Rsync Script]]
-- [[#host-setup][Host setup]]
-  - [[#install-nixos][Install NixOS]]
-  - [[#add-channels][Add channels]]
-    - [[#stable][Stable]]
-    - [[#unstable][Unstable]]
-- [[#emacs-config][Emacs Config]]
-- [[#xmonad][XMonad]]
-  - [[#imports][Imports]]
-  - [[#main][Main]]
-  - [[#keybindings][Keybindings]]
-  - [[#asthetics][Asthetics]]
-- [[#nixos-config][Nixos Config]]
-  - [[#system-level-config][System-level Config]]
-  - [[#user-level-config][User-level Config]]
-  - [[#global-constants][Global Constants]]
-  - [[#hardware-specific-config][Hardware-specific Config]]
-  - [[#version-pinning][Version Pinning]]
 
 * Deployment
 
