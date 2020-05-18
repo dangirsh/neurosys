@@ -7,17 +7,18 @@
 
 * About
 
-The state of my neurosys includes:
+The state of my neurosys includes configuraiton for:
 
-- my [[https://nixos.org/][NixOS]] config
-- my [[https://xmonad.org/][XMonad]] config
-- my [[https://github.com/hlissner/doom-emacs][Doom Emacs]] config as a submodule
+- [[https://nixos.org/][NixOS]]
+- [[https://xmonad.org/][XMonad]]
+- [[https://github.com/hlissner/doom-emacs][Doom Emacs]] 
+  - a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities like deploying to remote servers.
 
-Together, these fully define a minimal and reproducible computing environment.
+Together, these fully define a *minimal and reproducible computing environment*.
 
-[[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are the only two source files.
+[[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are /the only two source files/. The rest are generated.
 
-There's also small [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][Doom Emacs module]] with additional utilities, including one for deploying neurosys as a remote development environment.
+If you are viewing this in a browser, consider opening the [[https://github.com/dangirsh/neurosys/blob/master/README.org][original org file]] in Emacs for the full experience. 
 
 ** Inspirations
 
