@@ -7,7 +7,7 @@
 
 * About
 
-The state of my neurosys includes configuraiton for:
+The state of my neurosys includes configuration for:
 
 - [[https://nixods.org/][NixOS]] ([[https://github.com/dangirsh/neurosys/tree/master/nixos][config]])
 - [[https://xmonad.org/][XMonad]] ([[https://github.com/dangirsh/neurosys/tree/master/home/.xmonad][config]])
@@ -35,7 +35,7 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
 - https://www.nmattia.com/posts/2018-03-21-nix-reproducible-setup-linux-macos.html
 - https://christine.website/blog/nixos-desktop-flow-2020-04-25
 
-* Table of Contents :TOC_4:
+* Table of Contents :TOC_4: :QUOTE:
 - [[#about][About]]
   - [[#inspirations][Inspirations]]
   - [[#helpful-resources][Helpful Resources]]
