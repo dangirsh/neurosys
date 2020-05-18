@@ -1,5 +1,5 @@
-#+title: Neurosys
-#+subtitle: Neurotically minimal and reproducible computing environment.
+#+title: neurosys
+#+subtitle: A neurotically minimal and reproducible computing environment.
 #+author: Dan Girshovich
 #+email: dan.girsh@gmail.com
 #+startup: hideblocks align entitiespretty
@@ -7,11 +7,17 @@
 
 * About
 
-This is my computing configuration, organized in a literate Org file.
+The state of my neurosys includes:
 
-NixOS + XMonad + Doom Emacs
+- my [[nixos.org/][NixOS]] config
+- my [[https://xmonad.org/][XMonad]] config
+- my [[https://github.com/dangirsh/.doom.d][Doom Emacs]] config as a submodule
 
-Currently testing on a remote Linode instance.
+Together, these fully define a minimal and reproducible computing environment.
+
+This [[http://cachestocaches.com/2018/6/org-literate-programming/][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are the only two source files.
+
+There's also small [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][Doom Emacs module]] with additional utilities, including one for deploying neurosys as a remote development environment.
 
 ** Inspirations
 
