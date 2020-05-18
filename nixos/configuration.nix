@@ -19,24 +19,24 @@ in {
     useSandbox = true;
     autoOptimiseStore = true;
     maxJobs = 3; # should be 1 per CPU logical core
-    # binaryCaches = [
-    #   "https://cache.nixos.org/"
-    #   "https://ghcide-nix.cachix.org"
-    #   "https://hercules-ci.cachix.org"
-    #   "https://iohk.cachix.org"
-    #   "https://nix-tools.cachix.org"
-    # ];
-    # binaryCachePublicKeys = [
-    #   "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
-    #   "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
-    #   "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-    #   "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
-    # ];
-    # gc = {
-    #   automatic = true;
-    #   dates = "23:00";
-    #   options = "--delete-older-than 30d";
-    # };
+    binaryCaches = [
+      "https://cache.nixos.org/"
+      "https://ghcide-nix.cachix.org"
+      "https://hercules-ci.cachix.org"
+      "https://iohk.cachix.org"
+      "https://nix-tools.cachix.org"
+    ];
+    binaryCachePublicKeys = [
+      "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
+      "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
+      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+      "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
+    ];
+    gc = {
+      automatic = true;
+      dates = "23:00";
+      options = "--delete-older-than 30d";
+    };
   };
 
   time.timeZone = "America/Los_Angeles";
