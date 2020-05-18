@@ -9,7 +9,7 @@
 
 The state of my neurosys includes:
 
-- my [[nixos.org/][NixOS]] config
+- my [[https://nixos.org/][NixOS]] config
 - my [[https://xmonad.org/][XMonad]] config
 - my [[https://github.com/dangirsh/.doom.d][Doom Emacs]] config as a submodule
 
