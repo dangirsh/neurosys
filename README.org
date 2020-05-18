@@ -62,25 +62,12 @@ rsync -Pav home/ $HOST:/home/dan/
       (find-file host-root)
       (compile "nixos-rebuild switch")))
   (switch-to-buffer-other-window "*compilation*"))
-
-(defun neurosys/deploy-to-nixos-dev ()
-  (neurosys/deploy-to-host "root@nixos-dev"))
 #+end_src
 
 #+RESULTS:
-: neurosys/deploy-to-nixos-dev
+: neurosys/deploy-to-host
 
-** Doom Keybindings
-
-#+begin_src emacs-lisp
-(map!
-   :map org-mode-map
-   :localleadern
-   (:prefix ("s" . "Neurosys")
-     :desc "Deploy" "d" #'neurosys/deploy-to-nixos-dev))
-#+end_src
-
-#+RESULTS:
+[[elisp:(neurosys/deploy-to-host "root@nixos-dev")][Deploy to nixos-dev]]
 
 * Host setup
 
