@@ -25,6 +25,7 @@ There's also small [[https://github.com/dangirsh/.doom.d/tree/master/modules/per
 - https://github.com/malloc47/config
 - https://github.com/jwiegley/nix-config
 - https://github.com/hlissner/dotfiles
+- https://matthewbauer.us/bauer/
 
 ** Helpful Resources
 
