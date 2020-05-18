@@ -91,13 +91,24 @@ https://www.linode.com/docs/tools-reference/custom-kernels-distros/install-nixos
 
 ** Add channels
 
-One the Linode instance
+*** Stable
 
 #+BEGIN_SRC sh
 NIXOS_VERSION=20.03
 
 nix-channel --add "https://nixos.org/channels/nixos-${NIXOS_VERSION}" nixos
 nix-channel --add "https://github.com/rycee/home-manager/archive/release-${NIXOS_VERSION}.tar.gz" home-manager
+nix-channel --add "https://nixos.org/channels/nixpkgs-${NIXOS_VERSION}" nixpkgs
+
+nix-channel update
+#+END_SRC
+
+*** Unstable
+
+#+BEGIN_SRC sh
+
+nix-channel --add https://github.com/rycee/home-manager/archive/master.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-unstable nixos
 nix-channel --add "https://nixos.org/channels/nixpkgs-unstable" nixpkgs-unstable
 
 nix-channel update
@@ -444,7 +455,7 @@ in {
     # joker
     # leiningen
 
-    # julia_13
+    julia_13
 
     ## Doom dependencies
     # emacsGit
