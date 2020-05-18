@@ -36,27 +36,6 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
 - https://christine.website/blog/nixos-desktop-flow-2020-04-25
 
 * Deployment
-** Local
-
-#+begin_src sh :tangle install.sh :results output replace :tangle-mode (identity #o775)
-set -vex
-
-NEUROSYS_HOME="$(dirname "$(readlink -f "$0")")"/home
-
-# # rsync -Pav --rsync-path="sudo rsync" nixos/ /etc/nixos/
-
-# Cleanup old symlinks
-rm -f $HOME/.doom.d
-rm -f $HOME/.xmonad/xmonad.hs
-
-ln -s $NEUROSYS_HOME/.doom.d $HOME/.doom.d
-ln -s $NEUROSYS_HOME/.xmonad/xmonad.hs $HOME/.xmonad/xmonad.hs
-#+end_src
-
-#+RESULTS:
-
-
-** Remote Hosts
 
 #+begin_src sh :tangle rsync.sh :tangle-mode (identity #o775)
 HOST=$1
