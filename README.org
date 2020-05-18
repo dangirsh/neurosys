@@ -1,3 +1,10 @@
+#+title: Neurosys
+#+subtitle: Neurotically minimal and reproducible computing environment.
+#+author: Dan Girshovich
+#+email: dan.girsh@gmail.com
+#+startup: hideblocks align entitiespretty
+
+
 * About
 
 This is my computing configuration, organized in a literate Org file.
