@@ -11,7 +11,7 @@ The state of my neurosys includes:
 
 - my [[https://nixos.org/][NixOS]] config
 - my [[https://xmonad.org/][XMonad]] config
-- my [[https://github.com/dangirsh/.doom.d][Doom Emacs]] config as a submodule
+- my [[https://github.com/hlissner/doom-emacs][Doom Emacs]] config as a submodule
 
 Together, these fully define a minimal and reproducible computing environment.
 
