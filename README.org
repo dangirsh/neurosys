@@ -799,7 +799,7 @@ in {
     [ # ./hardware-configuration.nix
       # ./settings.nix
       # "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/release-20.03.tar.gz}/nixos"z
-      <nixos/modules/virtualization/virtualbox-image.nix>
+      <nixpkgs/nixos/modules/virtualisation/virtualbox-image.nix>
     ];
 
   system.stateVersion = "20.03";
@@ -813,19 +813,19 @@ in {
     useSandbox = true;
     autoOptimiseStore = true;
     maxJobs = 3; # should be 1 per CPU logical core
-    binaryCaches = [
-      "https://cache.nixos.org/"
-      "https://ghcide-nix.cachix.org"
-      "https://hercules-ci.cachix.org"
-      "https://iohk.cachix.org"
-      "https://nix-tools.cachix.org"
-    ];
-    binaryCachePublicKeys = [
-      "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
-      "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
-      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
-    ];
+    # binaryCaches = [
+    #   "https://cache.nixos.org/"
+    #   "https://ghcide-nix.cachix.org"
+    #   "https://hercules-ci.cachix.org"
+    #   "https://iohk.cachix.org"
+    #   "https://nix-tools.cachix.org"
+    # ];
+    # binaryCachePublicKeys = [
+    #   "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
+    #   "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
+    #   "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+    #   "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
+    # ];
     gc = {
       automatic = true;
       dates = "23:00";
@@ -878,23 +878,23 @@ in {
 
   security.sudo.wheelNeedsPassword = false;
 
-  users.mutableUsers = false;
+  # users.mutableUsers = false;
 
-  users.extraUsers.dan = {
-    isNormalUser = true;
-    uid = 1001;
-    createHome = true;
-    home = "/home/dan";
-    description = "Dan Girshovich";
-    extraGroups = [
-      "audio"
-      "networkmanager"
-      "systemd-journal"
-      "vboxusers"
-      "video"
-      "wheel"
-    ];
-  };
+  # users.extraUsers.dan = {
+  #   isNormalUser = true;
+  #   uid = 1001;
+  #   createHome = true;
+  #   home = "/home/dan";
+  #   description = "Dan Girshovich";
+  #   extraGroups = [
+  #     "audio"
+  #     "networkmanager"
+  #     "systemd-journal"
+  #     "vboxusers"
+  #     "video"
+  #     "wheel"
+  #   ];
+  # };
 
   # home-manager.users.dan = import ./home.nix ;
 
@@ -905,9 +905,9 @@ in {
     passwordAuthentication = false;
   };
 
-  users.users.dan.openssh.authorizedKeys.keys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
-  ];
+  # users.users.dan.openssh.authorizedKeys.keys = [
+  #   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
+  # ];
 
   programs.ssh.startAgent = true;
 
