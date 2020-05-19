@@ -46,7 +46,9 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
     - [[#stable][Stable]]
     - [[#unstable][Unstable]]
 - [[#deployment][Deployment]]
-  - [[#rsync-script][Rsync Script]]
+  - [[#get-the-neurosys-source][Get the neurosys source]]
+  - [[#sync-to-host][Sync to host]]
+    - [[#rsync-script][Rsync Script]]
 - [[#doom-emacs][Doom Emacs]]
 - [[#xmonad][XMonad]]
   - [[#imports][Imports]]
@@ -97,9 +99,19 @@ nix-channel update
 
 * Deployment
 
+** Get the neurosys source
+
+Don't forget to clone recursively, because of the submodules:
+
+#+begin_src sh
+git clone --recursive git@github.com:dangirsh/neurosys.git
+#+end_src
+
+** Sync to host
+
 Run [[elisp:(neurosys/deploy-to-host)][neurosys/deploy-to-host]], which will tangle this file and =rsync= the results to a specified host.
 
-** Rsync Script
+*** Rsync Script
 
 #+begin_src sh :tangle rsync.sh :tangle-mode (identity #o775)
 HOST=$1
@@ -109,9 +121,10 @@ rsync -Pav --rsync-path="sudo rsync" nixos/ $HOST:/etc/nixos/
 rsync -Pav home/ $HOST:$HOST_HOME
 #+end_src
 
-** COMMENT Quick deploy links
+*** COMMENT Quick deploy links
 
 [[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
+
 
 * Doom Emacs
 
