@@ -69,7 +69,7 @@ in {
     # direnv
 
     # Upstream failing
-    # julia_11
+    # julia_13
 
     ## Doom dependencies
 
