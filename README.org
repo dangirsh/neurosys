@@ -68,6 +68,7 @@ If you are viewing this in a browser, consider opening the [[https://github.com/
       - [[#easier-kill-binding][Easier Kill Binding]]
       - [[#volume-control][Volume Control]]
       - [[#screenshots][Screenshots]]
+      - [[#add-workspace-0][Add Workspace 0]]
       - [[#arandr][Arandr]]
       - [[#multiple-monitors][Multiple Monitors]]
   - [[#asthetics][Asthetics]]
@@ -224,6 +225,8 @@ main = xmonad $
 
 From https://xmonad.org/manpage.html#default-keyboard-bindings
 
+[[file:~/repos/xmonad/man/xmonad.hs::myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $][source]]
+
 | binding           | command                                                                       |
 |-------------------+-------------------------------------------------------------------------------|
 | mod-shift-return  | Launch terminal                                                               |
@@ -363,6 +366,13 @@ I don't run a desktop environment...
   , ((m, xK_Print), myScreenshotClipboard)
 #+end_src
 
+**** Add Workspace 0
+
+#+begin_src haskell
+  , ((m, xK_0), windows $ W.greedyView "0")
+  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
+#+end_src
+
 **** Arandr
 
 The ~main.sh~ is a symlink to an Arandr script that sets up my current monitor configuration.
@@ -390,6 +400,8 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
 ***** TODO Figure out why this is here
 
 Since that functionality seems to be default.
+
+[[file:~/repos/xmonad/man/xmonad.hs::\[((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))]]
 
 ** Asthetics
 
@@ -772,6 +784,7 @@ in {
 
 - [ ] xtrlock
 - [ ] maim
+- [ ] xclip
 - [ ] arandr
 
 ** Global Constants
