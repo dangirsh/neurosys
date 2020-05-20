@@ -115,6 +115,11 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m, xK_Print), myScreenshotClipboard)
 -- Screenshots:2 ends here
 
+-- [[file:~/repos/neurosys/README.org::*Add Workspace 0][Add Workspace 0:1]]
+  , ((m, xK_0), windows $ W.greedyView "0")
+  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
+-- Add Workspace 0:1 ends here
+
 -- [[file:~/repos/neurosys/README.org::*Arandr][Arandr:1]]
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
