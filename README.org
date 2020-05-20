@@ -359,9 +359,17 @@ I don't run a desktop environment...
 #+end_src
 
 #+begin_src haskell
-  , ((mod, xK_Print), myScreenshotClipboard)
+  , ((m, xK_Print), myScreenshotClipboard)
 #+end_src
 
+**** Arandr
+
+The ~main.sh~ is a symlink to an Arandr script that sets up my current monitor configuration.
+
+#+begin_src haskell
+  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
+  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
+#+end_src
 
 **** Multiple Monitors
 
