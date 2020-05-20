@@ -32,7 +32,7 @@ main = xmonad $
   , terminal = "emacsclient -c -e \"(vterm)\""  --assumes emacs server running
   , layoutHook = smartBorders $  -- no borders for sole windows
                  noFrillsDeco shrinkText topBarTheme $   -- visually mark the focused window with a top bar
-                 spacing 3 $  -- gap between windows
+                 -- spacing 3 $  -- gap between windows
                  minimize
                  (ResizableTall 1 (3/100) (1/2) []
                    ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
