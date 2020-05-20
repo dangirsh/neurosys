@@ -423,6 +423,7 @@ myScreenshot = do
 #+end_src
 
 #+begin_src haskell
+myScreenshotClipboard :: X ()
 myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/png"
 #+end_src
 
