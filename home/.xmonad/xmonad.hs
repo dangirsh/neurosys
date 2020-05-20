@@ -1,6 +1,5 @@
 -- [[file:~/repos/neurosys/README.org::*Imports][Imports:1]]
 import XMonad
-import XMonad.Core
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.Grid
@@ -116,6 +115,11 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m, xK_Print), myScreenshotClipboard)
 -- Screenshots:2 ends here
 
+-- [[file:~/repos/neurosys/README.org::*Arandr][Arandr:1]]
+  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
+  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
+-- Arandr:1 ends here
+
 -- [[file:~/repos/neurosys/README.org::*Multiple Monitors][Multiple Monitors:1]]
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
@@ -161,5 +165,6 @@ myScreenshot = do
 -- Screenshot:1 ends here
 
 -- [[file:~/repos/neurosys/README.org::*Screenshot][Screenshot:2]]
+myScreenshotClipboard :: X ()
 myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/png"
 -- Screenshot:2 ends here
