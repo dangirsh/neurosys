@@ -822,7 +822,7 @@ services = {
 };
 #+END_SRC
 
-#+BEGIN_SRC nix :tangle nixos/home.}nix :comments link
+#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
 
 #+END_SRC
 
