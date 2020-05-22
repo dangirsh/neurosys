@@ -150,7 +150,7 @@ programs = {
       };
     };
   };
-}
+};
 # Programs:1 ends here
 
 # [[file:~/repos/neurosys/README.org::*Services][Services:1]]
@@ -187,5 +187,5 @@ services = {
 # Services:1 ends here
 
 # [[file:~/repos/neurosys/README.org::*Services][Services:2]]
-
+}
 # Services:2 ends here
