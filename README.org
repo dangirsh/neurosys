@@ -66,6 +66,7 @@ In no particular order, I found the following configurations especially helpful:
     - [[#default][Default]]
     - [[#custom][Custom]]
       - [[#rebooting--restarting][Rebooting / Restarting]]
+      - [[#add-workspace-0][Add Workspace 0]]
       - [[#launcher--window-switcher][Launcher / Window Switcher]]
       - [[#running-emacs][Running Emacs]]
       - [[#lock-screen][Lock Screen]]
@@ -77,7 +78,6 @@ In no particular order, I found the following configurations especially helpful:
       - [[#easier-kill-binding][Easier Kill Binding]]
       - [[#volume-control][Volume Control]]
       - [[#screenshots][Screenshots]]
-      - [[#add-workspace-0][Add Workspace 0]]
       - [[#arandr][Arandr]]
       - [[#multiple-monitors][Multiple Monitors]]
   - [[#asthetics][Asthetics]]
@@ -288,6 +288,13 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m .|. shiftMask .|. mod1Mask, xK_i), spawn "xmonad --recompile && xmonad --restart")
 #+end_src
 
+**** Add Workspace 0
+
+#+begin_src haskell
+  , ((m, xK_0), windows $ W.greedyView "0")
+  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
+#+end_src
+
 **** Launcher / Window Switcher
 
 I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or switch between open windows. It's simple, fast, and supports fuzzy search.
@@ -380,16 +387,9 @@ I don't run a desktop environment...
   , ((m, xK_Print), myScreenshotClipboard)
 #+end_src
 
-**** Add Workspace 0
-
-#+begin_src haskell
-  , ((m, xK_0), windows $ W.greedyView "0")
-  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
-#+end_src
-
 **** Arandr
 
-The ~main.sh~ is a symlink to an Arandr script that sets up my current monitor configuration.
+I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr scripts are for my desk / laptop.
 
 #+begin_src haskell
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
