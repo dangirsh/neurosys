@@ -92,11 +92,14 @@ In no particular order, I found the following configurations especially helpful:
     - [[#packages][Packages]]
     - [[#programs][Programs]]
     - [[#services][Services]]
-      - [[#to-add-03][To add]]
+      - [[#to-test-05][To test]]
   - [[#global-constants][Global Constants]]
   - [[#hardware-specific-config][Hardware-specific Config]]
   - [[#version-pinning][Version Pinning]]
 - [[#future-work][Future Work]]
+  - [[#floating-emacs-popup-for-quick-commands][Floating Emacs popup for quick commands]]
+  - [[#consistent-copypaste-bindings][Consistent copy/paste bindings]]
+  - [[#consolidate-xmonad-and-emacs-window-management][Consolidate XMonad and Emacs window management]]
   - [[#fix-indentation-in-tangled-files][Fix indentation in tangled files]]
 #+END_QUOTE
 
@@ -468,8 +471,11 @@ myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/pn
 
 * Nixos Config
 ** System-level Config
+:PROPERTIES:
+:header-args: :tangle nixos/configuration.nix :comments link
+:END:
 
-#+BEGIN_SRC nix :tangle nixos/configuration.nix :comments link
+#+BEGIN_SRC nix
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
@@ -627,8 +633,11 @@ in {
 #+END_SRC
 
 ** User-level Config
+:PROPERTIES:
+:header-args: :tangle nixos/home.nix :comments link
+:END:
 
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
+#+BEGIN_SRC nix
 { config, pkgs, ... }:
 
 let
@@ -655,7 +664,7 @@ in {
 
 *** Environment Variables
 
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
+#+BEGIN_SRC nix
 home.sessionVariables = {
   EDITOR = "emacsclient --create-frame --alternate-editor emacs";
   PASSWORD_STORE_DIR = "${syncDir}/.password-store";
@@ -681,7 +690,7 @@ xdg.enable = true;
 #+END_SRC
 
 *** Packages
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
+#+BEGIN_SRC nix
 
 home.packages = with pkgs; [
   rofi
@@ -726,7 +735,7 @@ home.packages = with pkgs; [
 
 *** Programs
 
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
+#+BEGIN_SRC nix
 programs = {
 
   # Let Home Manager install and manage itself.
@@ -787,12 +796,12 @@ programs = {
       };
     };
   };
-}
+};
 #+END_SRC
 
 *** Services
 
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
+#+BEGIN_SRC nix
 services = {
   emacs.enable = true;
 
@@ -825,11 +834,11 @@ services = {
 };
 #+END_SRC
 
-#+BEGIN_SRC nix :tangle nixos/home.nix :comments link
-
+#+BEGIN_SRC nix 
+}
 #+END_SRC
 
-**** TODO To add [0/3]
+**** TODO To test [0/5]
 
 - [ ] xtrlock-pam
 - [ ] maim
@@ -1038,6 +1047,41 @@ mapAttrs (_: spec:
 #+end_src
 
 * Future Work
+
+** TODO [#A] Floating Emacs popup for quick commands
+
+It's usually most convenient to use/implement functions in Emacs than other tools. This was a huge draw towards EXWM, and I got used to that workflow.
+
+For example, generating / getting passwords stored in =pass= has a nice Emacs interface. Currently, this often means switching from Firefox to Emacs to run a command, then back to Firefox. In this situation, a common solution seems to be eschewing Emacs for things like =rofi= (e.g. =rofi-pass=).
+
+However, if I could popup a fast, floating Emacs window (similar to Rofi), I'd be able to leverage Elisp for most tasks like this. This might fully obviate =Rofi= and the XMonad prompt.
+
+The floating window would default to a =counsel-M-x= fuzzy search over all incremental commands, and be bound to =s-x= in XMonad.
+
+Examples:
+
+- screenshotting
+- pass interface
+- redshift / brightness controls
+- (maybe) finding windows / launching programs
+- clipboard management (helm kill ring)
+
+As a small added benefit, I'd have the full Emacs bindings available in the input area.
+
+** [#B] Consistent copy/paste bindings
+
+In EXWM, I used the simulation keys to have consistent Emacs copy/paste bindings everywhere. Need a solution for XMonad. Setting the GTK bindings to "emacs" didn't seem to affect for Firefox, which is (by far) my primary non-Emacs window.
+
+** [#B] Consolidate XMonad and Emacs window management
+
+Ideally, XMonad could manage all windows, including Emacs windows.
+
+Possible solutions:
+
+- frames-only-mode
+- frame-mode
+
+These seemed to cause more problems than they fixed for me.
 
 ** TODO [#C] Fix indentation in tangled files
 
