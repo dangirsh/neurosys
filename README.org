@@ -1046,10 +1046,3 @@ Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/hom
 Quickfix is to auto-indent the tangled files, then detangle. 
 
 Using noweb references seems to be the best option: https://orgmode.org/manual/Noweb-Reference-Syntax.html. See "This feature can also be used for management of indentation in exported code snippets".
-
-
-
-* COMMENT Local Variables :noexport:
-# local variables:
-# backup-by-copying: t
-# end:
