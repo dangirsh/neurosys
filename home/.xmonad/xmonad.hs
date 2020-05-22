@@ -61,6 +61,11 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m .|. shiftMask .|. mod1Mask, xK_i), spawn "xmonad --recompile && xmonad --restart")
 -- Rebooting / Restarting:1 ends here
 
+-- [[file:~/repos/neurosys/README.org::*Add Workspace 0][Add Workspace 0:1]]
+  , ((m, xK_0), windows $ W.greedyView "0")
+  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
+-- Add Workspace 0:1 ends here
+
 -- [[file:~/repos/neurosys/README.org::*Launcher / Window Switcher][Launcher / Window Switcher:1]]
   , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy")
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
@@ -114,11 +119,6 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- [[file:~/repos/neurosys/README.org::*Screenshots][Screenshots:2]]
   , ((m, xK_Print), myScreenshotClipboard)
 -- Screenshots:2 ends here
-
--- [[file:~/repos/neurosys/README.org::*Add Workspace 0][Add Workspace 0:1]]
-  , ((m, xK_0), windows $ W.greedyView "0")
-  , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
--- Add Workspace 0:1 ends here
 
 -- [[file:~/repos/neurosys/README.org::*Arandr][Arandr:1]]
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
