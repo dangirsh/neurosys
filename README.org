@@ -18,7 +18,7 @@ Together, these fully define a my computing environment, which strives to be
 
 - *Effective*: interactions with code/data should occur at the speed of thought.
 - *Long-lived*: should fight entropy until the end of the keyboard + screen era.
-- *Minimal*: Less is more for the base configuration, remembering that Nix enables
+- *Minimal*: less is more for the base configuration, remembering that Nix enables
   project-level dependency management.
 
 [[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are /the only two source files/. The rest are generated via [[https://orgmode.org/manual/Extracting-Source-Code.html][tangling]].
