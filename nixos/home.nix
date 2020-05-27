@@ -51,14 +51,12 @@ xdg.enable = true;
 home.packages = with pkgs; [
   rofi
   gnupg
-  # syncthing-cli # provides stcli
+  syncthing-cli # provides stcli
 
   (pass.withExtensions (exts: [
     exts.pass-otp
     exts.pass-genphrase
   ]))
-
-  firefox-beta-bin
 
   xtrlock-pam  # screen locking
   maim  # screenshots
@@ -68,7 +66,7 @@ home.packages = with pkgs; [
 
   # direnv
 
-  # Upstream failing
+  # Upstream failing :(
   # julia_13
 
   ## Doom dependencies
@@ -86,38 +84,52 @@ home.packages = with pkgs; [
   sqlite
   # :lang latex & :lang org (latex previews)
   texlive.combined.scheme-tetex
+
+  firefox-beta-bin
 ];
 # Packages:1 ends here
 
 # [[file:~/repos/neurosys/README.org::*Programs][Programs:1]]
 programs = {
+# Programs:1 ends here
 
-  # Let Home Manager install and manage itself.
-  home-manager.enable = true;
+# [[file:~/repos/neurosys/README.org::*Home Manager][Home Manager:1]]
+# Let Home Manager install and manage itself.
+home-manager.enable = true;
+# Home Manager:1 ends here
 
-  emacs = {
-    enable = true;
-    # Compile with imagemagick support so I can resize images.
-    package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
-  };
+# [[file:~/repos/neurosys/README.org::*Emacs][Emacs:1]]
+emacs = {
+  enable = true;
+  # Compile with imagemagick support so I can resize images.
+  package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
+};
+# Emacs:1 ends here
 
-  bash = {
-    enable = true;
-    historyFile = "${syncDir}/.config/bash/.bash_history";
-    # FIXME: Document and reduce these
-    shellOptions = [
-      "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
-      "cmdhist" "nocaseglob" "histappend" "extglob"];
-  };
+# [[file:~/repos/neurosys/README.org::*Bash][Bash:1]]
+bash = {
+  enable = true;
+  historyFile = "${syncDir}/.config/bash/.bash_history";
+  # FIXME: Document and reduce these
+  shellOptions = [
+    "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
+    "cmdhist" "nocaseglob" "histappend" "extglob"];
+};
+# Bash:1 ends here
 
-  git = {
-    enable = true;
-    userName = "${config.settings.name}";
-    userEmail = "${config.settings.email}";
-  };
+# [[file:~/repos/neurosys/README.org::*Git][Git:1]]
+git = {
+  enable = true;
+  userName = "${config.settings.name}";
+  userEmail = "${config.settings.email}";
+};
+# Git:1 ends here
 
-  # direnv.enable = true;
+# [[file:~/repos/neurosys/README.org::*Direnv][Direnv:1]]
+# direnv.enable = true;
+# Direnv:1 ends here
 
+# [[file:~/repos/neurosys/README.org::*SSH][SSH:1]]
   ssh = {
     enable = true;
 
@@ -150,8 +162,11 @@ programs = {
       };
     };
   };
+# SSH:1 ends here
+
+# [[file:~/repos/neurosys/README.org::*End][End:1]]
 };
-# Programs:1 ends here
+# End:1 ends here
 
 # [[file:~/repos/neurosys/README.org::*Services][Services:1]]
 services = {
@@ -181,11 +196,10 @@ services = {
   #     ];
   #   };
 
-  # syncthing.enable = true;
   # lorri.enable = true;
 };
 # Services:1 ends here
 
-# [[file:~/repos/neurosys/README.org::*Services][Services:2]]
+# [[file:~/repos/neurosys/README.org::*End][End:1]]
 }
-# Services:2 ends here
+# End:1 ends here
