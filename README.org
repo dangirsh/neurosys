@@ -516,146 +516,255 @@ in {
     # Allow unfree, which is required for some drivers.
     allowUnfree = true;
   };
+  #+END_SRC
 
-  nix = {
-    useSandbox = true;
-    autoOptimiseStore = true;
-    maxJobs = 3; # should be 1 per CPU logical core
-    binaryCaches = [
-      "https://cache.nixos.org/"
-      "https://ghcide-nix.cachix.org"
-      "https://hercules-ci.cachix.org"
-      "https://iohk.cachix.org"
-      "https://nix-tools.cachix.org"
-    ];
-    binaryCachePublicKeys = [
-      "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
-      "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
-      "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
-      "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
-    ];
-    gc = {
-      automatic = true;
-      dates = "23:00";
-      options = "--delete-older-than 30d";
-    };
+*** Nix
+
+#+BEGIN_SRC nix
+nix = {
+  useSandbox = true;
+  autoOptimiseStore = true;
+  maxJobs = 3; # should be 1 per CPU logical core
+  binaryCaches = [
+    "https://cache.nixos.org/"
+    "https://ghcide-nix.cachix.org"
+    "https://hercules-ci.cachix.org"
+    "https://iohk.cachix.org"
+    "https://nix-tools.cachix.org"
+  ];
+  binaryCachePublicKeys = [
+    "ghcide-nix.cachix.org-1:ibAY5FD+XWLzbLr8fxK6n8fL9zZe7jS+gYeyxyWYK5c="
+    "hercules-ci.cachix.org-1:ZZeDl9Va+xe9j+KqdzoBZMFJHVQ42Uu/c/1/KMC5Lw0="
+    "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
+    "nix-tools.cachix.org-1:ebBEBZLogLxcCvipq2MTvuHlP7ZRdkazFSQsbs0Px1A="
+  ];
+  gc = {
+    automatic = true;
+    dates = "23:00";
+    options = "--delete-older-than 30d";
   };
+};
+#+END_SRC
 
-  time.timeZone = "America/Los_Angeles";
+*** Timezone
 
-  boot = {
-    cleanTmpDir = true;
+#+BEGIN_SRC nix
+time.timeZone = "America/Los_Angeles";
+#+END_SRC
 
-    loader = {
-      timeout = 1; # Timeout (in seconds) until loader boots the default menu item.
-      grub = {
-        enable = true;
-        version = 2;
-        device = "nodev";
-        copyKernels = true;
-        fsIdentifier = "provided";
-        extraConfig = "serial; terminal_input serial; terminal_output serial";
-      };
-      systemd-boot.enable = false;
-      efi.canTouchEfiVariables = false;
+*** Boot
 
-    };
-  };
+#+BEGIN_SRC nix
+boot = {
+  cleanTmpDir = true;
 
-  networking.useDHCP = false;
-  networking.usePredictableInterfaceNames = false;
-  networking.interfaces.eth0.useDHCP = true;
-  networking.firewall.enable = true;
-  # networking.networkmanager.enable = true;
-  networking.hostName = "nixos-dev";
-
-  services = {
-
-    xserver = {
+  loader = {
+    timeout = 1; # Timeout (in seconds) until loader boots the default menu item.
+    grub = {
       enable = true;
-      layout = "us";
+      version = 2;
+      device = "nodev";
+      copyKernels = true;
+      fsIdentifier = "provided";
+      extraConfig = "serial; terminal_input serial; terminal_output serial";
+    };
+    systemd-boot.enable = false;
+    efi.canTouchEfiVariables = false;
 
-      windowManager.xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-        extraPackages = haskellPackges: [
-          haskellPackges.xmonad-contrib
-          haskellPackges.xmonad-extras
-          haskellPackges.xmonad
-        ];
-      };
+  };
+};
+#+END_SRC
 
-      displayManager = {
-        defaultSession = "none+xmonad";
-        lightdm.enable = true;
+*** Networking
+
+#+BEGIN_SRC nix
+
+networking.useDHCP = false;
+networking.usePredictableInterfaceNames = false;
+networking.interfaces.eth0.useDHCP = true;
+networking.firewall.enable = true;
+# networking.networkmanager.enable = true;
+networking.hostName = "nixos-dev";
+#+END_SRC
+
+*** Services
+
+#+BEGIN_SRC nix
+
+services = {
+
+  xserver = {
+    enable = true;
+    layout = "us";
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      extraPackages = haskellPackges: [
+        haskellPackges.xmonad-contrib
+        haskellPackges.xmonad-extras
+        haskellPackges.xmonad
+      ];
+    };
+
+    displayManager = {
+      defaultSession = "none+xmonad";
+      lightdm.enable = true;
+    };
+    desktopManager.xterm.enable = false;
+  };
+#+END_SRC
+
+**** Syncthing
+#+BEGIN_SRC nix
+
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/syncthing.nix
+  syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+    user = "${config.settings.username}";
+    configDir = "/home/${config.settings.username}/.config/syncthing";
+    dataDir = "/home/${config.settings.username}/.local/share/syncthing";
+    declarative = {
+      devices = {
+        nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
+        x1carbon.id = "IOINCUM-QKL34MC-RSPJETE-CUW5D2Y-3CMDSLD-72HNXZI-7U3TN44-35CLKQN";
+        pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
       };
-      desktopManager.xterm.enable = false;
+      folders = {
+        sync = rec {
+          id = "at23u-zmxto";
+          devices = [ "nixos-dev" "x1carbon"  "pixel3a-2"];
+          path = "/bkp/Sync";
+          watch = false;
+          rescanInterval = 3600 * 1;
+          type = "receiveonly"; # sendreceive
+          enable = true;
+          versioning.type = "simple";
+          versioning.params.keep = "5";
+        };
+        media = rec {
+          id = "media";
+          devices = [ "nixos-dev"  "x1carbon" ];
+          path = "/bkp/Media";
+          watch = false;
+          rescanInterval = 3600 * 6;
+          type = "receiveonly"; # sendreceive
+          enable = true;
+          versioning.type = "simple";
+          versioning.params.keep = "5";
+        };
+        work = rec {
+          id = "work";
+          devices = [ "nixos-dev" "x1carbon" ];
+          path = "/bkp/Work";
+          watch = false;
+          rescanInterval = 3600 * 6;
+          type = "receiveonly"; # sendreceive
+          enable = true;
+          versioning.type = "simple";
+          versioning.params.keep = "5";
+        };
+      };
     };
   };
 
-  # virtualisation.docker.enable = true;
+};
 
-  environment.systemPackages = with pkgs; [
-    coreutils binutils
-    curl wget
-    zip unzip
-    git
-    killall
-    sshfs
-    mtr # traceroute
-    sysstat
-    htop
+# virtualisation.docker.enable = true;
+#+END_SRC
+
+*** Packages
+
+#+BEGIN_SRC nix
+environment.systemPackages = with pkgs; [
+  coreutils binutils
+  curl wget
+  zip unzip
+  git
+  killall
+  syncthing-cli
+  sshfs
+  mtr # traceroute
+  sysstat
+  htop
+];
+#+END_SRC
+
+*** Fonts
+
+#+BEGIN_SRC nix
+
+fonts = {
+  enableFontDir = true;
+  enableGhostscriptFonts = true;
+  fonts = with pkgs; [
+    corefonts
+    hack-font
   ];
+};
+#+END_SRC
 
-  fonts = {
-    enableFontDir = true;
-    enableGhostscriptFonts = true;
-    fonts = with pkgs; [
-      corefonts
-      hack-font
-    ];
-  };
+*** User Definition
 
-  security.sudo.wheelNeedsPassword = false;
+#+BEGIN_SRC nix
 
-  users.mutableUsers = false;
+security.sudo.wheelNeedsPassword = false;
 
-  users.extraUsers.${config.settings.username} = {
-    isNormalUser = true;
-    uid = 1000;
-    createHome = true;
-    home = "/home/${config.settings.username}";
-    description = "${config.settings.name}";
-    extraGroups = [
-      "audio"
-      "networkmanager"
-      "systemd-journal"
-      "vboxusers"
-      "video"
-      "wheel"
-    ];
-  };
+users.mutableUsers = false;
 
-  home-manager.users.dan = import ./home.nix ;
-
-  services.openssh = {
-    enable = true;
-    forwardX11 = true;
-    permitRootLogin = "without-password";
-    passwordAuthentication = false;
-  };
-
-  users.users.${config.settings.username}.openssh.authorizedKeys.keys = [
-    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
+users.extraUsers.${config.settings.username} = {
+  isNormalUser = true;
+  uid = 1000;
+  createHome = true;
+  home = "/home/${config.settings.username}";
+  description = "${config.settings.name}";
+  extraGroups = [
+    "audio"
+    "networkmanager"
+    "systemd-journal"
+    "vboxusers"
+    "video"
+    "wheel"
   ];
+};
 
-  programs.ssh.startAgent = true;
+home-manager.users.dan = import ./home.nix ;
+#+END_SRC
+
+*** SSH
+
+#+BEGIN_SRC nix
+
+services.openssh = {
+  enable = true;
+  forwardX11 = true;
+  permitRootLogin = "without-password";
+  passwordAuthentication = false;
+};
+
+users.users.${config.settings.username}.openssh.authorizedKeys.keys = [
+  "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+yJ5sv7iO9PBuozfmitR0JJfqDsJ7w+rlryq5CwdatO3tkRdR5dMYdFTFCeHbmeakPTC/uys08fziEUXh3DL206jDKQEMBoMGXNowZHyYzr25nIogHbveqeNTgP8jsTw5uBaJu8LFzHHey4Sw9WlRrvIqguUT5jB3omZh8yDWcxTrTJlTsN2TM3HILvirfVwBkD2uNTDdd5LplbZhx6x87VCs6ZNYhBjJ4CPcO4zTQuEdyyxUHEgtMkYgrS4Jb/Kl6Tleftlh55E74SZ3XXnw3lWdH9ra8ewH265iqNr/RwysagnalslBZDLl8yJcrMsCVi4tPrZZc4vaeCsIWK4X dan@x1carbon"
+];
+
+programs.ssh.startAgent = true;
+#+END_SRC
+
+*** X2Go Client
+
+#+BEGIN_SRC nix
 
   # programs.x2goserver.enable = true;
+#+END_SRC
+
+*** End
+
+#+BEGIN_SRC nix
 }
 #+END_SRC
 
 ** User-level Config
+
 :PROPERTIES:
 :header-args: :tangle nixos/home.nix :comments link
 :END:
@@ -718,14 +827,11 @@ xdg.enable = true;
 home.packages = with pkgs; [
   rofi
   gnupg
-  # syncthing-cli # provides stcli
 
   (pass.withExtensions (exts: [
     exts.pass-otp
     exts.pass-genphrase
   ]))
-
-  firefox-beta-bin
 
   xtrlock-pam  # screen locking
   maim  # screenshots
@@ -753,6 +859,8 @@ home.packages = with pkgs; [
   sqlite
   # :lang latex & :lang org (latex previews)
   texlive.combined.scheme-tetex
+
+  firefox-beta-bin
 ];
 #+END_SRC
 
@@ -760,33 +868,67 @@ home.packages = with pkgs; [
 
 #+BEGIN_SRC nix
 programs = {
+#+END_SRC
 
-  # Let Home Manager install and manage itself.
-  home-manager.enable = true;
+**** Home Manager
 
-  emacs = {
-    enable = true;
-    # Compile with imagemagick support so I can resize images.
-    package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
-  };
+#+BEGIN_SRC nix
+# Let Home Manager install and manage itself.
+home-manager.enable = true;
+#+END_SRC
 
-  bash = {
-    enable = true;
-    historyFile = "${syncDir}/.config/bash/.bash_history";
-    # FIXME: Document and reduce these
-    shellOptions = [
-      "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
-      "cmdhist" "nocaseglob" "histappend" "extglob"];
-  };
+**** Emacs
 
-  git = {
-    enable = true;
-    userName = "${config.settings.name}";
-    userEmail = "${config.settings.email}";
-  };
+#+BEGIN_SRC nix
+emacs = {
+  enable = true;
+  # Compile with imagemagick support so I can resize images.
+  package = pkgs.emacsGit.override { inherit (pkgs) imagemagick; };
+};
+#+END_SRC
 
-  # direnv.enable = true;
+**** Bash
 
+#+BEGIN_SRC nix
+bash = {
+  enable = true;
+  historyFile = "${syncDir}/.config/bash/.bash_history";
+  # FIXME: Document and reduce these
+  shellOptions = [
+    "autocd" "cdspell" "dirspell" "globstar" # bash >= 4
+    "cmdhist" "nocaseglob" "histappend" "extglob"];
+  # TODO: Test this
+  # https://github.com/akermu/emacs-libvterm#directory-tracking-and-prompt-tracking
+  initExtra = [
+    ''
+    vterm_prompt_end(){
+      vterm_printf \"51;A$(whoami)@$(hostname):$(pwd)\"
+    }
+    PS1=$PS1'\\[$(vterm_prompt_end)\\]'
+    ''
+  ]
+};
+#+END_SRC
+
+**** Git
+
+#+BEGIN_SRC nix
+git = {
+  enable = true;
+  userName = "${config.settings.name}";
+  userEmail = "${config.settings.email}";
+};
+#+END_SRC
+
+**** Direnv
+
+#+BEGIN_SRC nix
+# direnv.enable = true;
+#+END_SRC
+
+**** SSH
+
+#+BEGIN_SRC nix
   ssh = {
     enable = true;
 
@@ -819,8 +961,12 @@ programs = {
       };
     };
   };
-};
 #+END_SRC
+
+**** End
+#+begin_src nix
+};
+#+end_src
 
 *** Services
 
@@ -852,25 +998,42 @@ services = {
   #     ];
   #   };
 
-  # syncthing.enable = true;
   # lorri.enable = true;
 };
 #+END_SRC
+
+*** End
 
 #+BEGIN_SRC nix 
 }
 #+END_SRC
 
-**** TODO To test [0/5]
+*** TODO To test [0/5]
 
 - [ ] xtrlock-pam
 - [ ] maim
-- [ ] rofi-pass
+- [ ] rofi-pass (see [[*Floating Emacs popup for quick commands][Floating Emacs popup for quick commands]])
 - [ ] xclip
 - [ ] arandr
 
-** Global Constants
+*** TODO To add [/]
 
+- [ ] Messenging
+  - unified messenger (if it exists) for dealing with the madness of:
+    - sms
+    - signal
+    - fb
+    - whatsapp
+    - +keybase+
+    - slack
+    - irc
+    - riot
+  - Otherwise:
+    - Browser tabs for everything sans signal
+    - Signal-destop
+
+
+** Global Constants
 #+BEGIN_SRC nix :tangle nixos/settings.nix :comments link
 {config, pkgs, lib, ...}:
 
@@ -915,17 +1078,30 @@ with lib;
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
+  nix.maxJobs = lib.mkDefault 1;
+#+end_src
+
+*** Disk Mounts
+
+From [[https://nixos.org/nixos/manual/#ch-file-systems][Chapter 8. File Systems]]: "Mount points are created automatically if they don’t already exist."
+
+#+begin_src nix :tangle nixos/hardware-configuration.nix :comments link
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/bf38bdde-34dd-4d57-9bfe-07de465f0f29";
+      fsType = "ext4";
+    };
+
+  # Linode Volume "bkp". Targetted by syncthing.
+  fileSystems."/bkp" =
+    { device = "/dev/disk/by-id/scsi-0Linode_Volume_bkp";
       fsType = "ext4";
     };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/7596d600-d2c6-4d77-b138-7f595283af00"; }
     ];
-
-  nix.maxJobs = lib.mkDefault 1;
 }
+
 #+end_src
 ** Version Pinning
 
