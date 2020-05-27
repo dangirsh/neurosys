@@ -440,12 +440,6 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
-***** TODO Figure out why this is here
-
-Since that functionality seems to be default.
-
-[[file:~/repos/xmonad/man/xmonad.hs::\[((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))]]
-
 ** Asthetics
 
 #+begin_src haskell 
