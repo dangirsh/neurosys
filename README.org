@@ -20,7 +20,7 @@ These define a my computing environment, which strives to be
 - *Extensible*: otherwise, it's not really mine.
 - *Long-lived*: resist entropy/bitrot/bankruptcy until the end of the keyboard + screen era.
 - *Minimal*: less is more for the base configuration - Nix enables project-level dependency management.
-- *Reproducible*: enabled by the content-based hashes of Nix + Git.
+- *Reproducible*: enabled by the content-based hashes of Nix + Git. No fear of hitting un-recoverable states.
 
 [[https://github.com/dangirsh/neurosys/blob/master/README.org][This]] [[https://orgmode.org/worg/org-contrib/babel/intro.html#literate-programming][literate org file]], along with [[https://github.com/dangirsh/.doom.d/blob/master/README.org][another for Doom]], are /the only two source files/. The rest are generated via [[https://orgmode.org/manual/Extracting-Source-Code.html][tangling]].
 
@@ -87,17 +87,40 @@ In no particular order, I found the following configurations especially helpful:
   - [[#screenshot][Screenshot]]
 - [[#nixos-config][Nixos Config]]
   - [[#system-level-config][System-level Config]]
+    - [[#nix][Nix]]
+    - [[#timezone][Timezone]]
+    - [[#boot][Boot]]
+    - [[#networking][Networking]]
+    - [[#services][Services]]
+      - [[#syncthing][Syncthing]]
+    - [[#packages][Packages]]
+    - [[#fonts][Fonts]]
+    - [[#user-definition][User Definition]]
+    - [[#ssh][SSH]]
+    - [[#x2go-client][X2Go Client]]
+    - [[#end][End]]
   - [[#user-level-config][User-level Config]]
     - [[#environment-variables][Environment Variables]]
-    - [[#packages][Packages]]
+    - [[#packages-1][Packages]]
     - [[#programs][Programs]]
-    - [[#services][Services]]
-      - [[#to-test-05][To test]]
+      - [[#home-manager][Home Manager]]
+      - [[#emacs][Emacs]]
+      - [[#bash][Bash]]
+      - [[#git][Git]]
+      - [[#direnv][Direnv]]
+      - [[#ssh-1][SSH]]
+      - [[#end-1][End]]
+    - [[#services-1][Services]]
+    - [[#end-2][End]]
+    - [[#to-test-05][To test]]
+    - [[#to-add-][To add]]
   - [[#global-constants][Global Constants]]
   - [[#hardware-specific-config][Hardware-specific Config]]
+    - [[#disk-mounts][Disk Mounts]]
   - [[#version-pinning][Version Pinning]]
 - [[#future-work][Future Work]]
   - [[#floating-emacs-popup-for-quick-commands][Floating Emacs popup for quick commands]]
+  - [[#hidpi-autotoggle][HiDPI autotoggle]]
   - [[#consistent-copypaste-bindings][Consistent copy/paste bindings]]
   - [[#consolidate-xmonad-and-emacs-window-management][Consolidate XMonad and Emacs window management]]
   - [[#fix-indentation-in-tangled-files][Fix indentation in tangled files]]
@@ -171,7 +194,7 @@ rsync -Pav home/ $HOST:$HOST_HOME
 
 Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] are stable, I'm *not yet* tracking my Emacs packages / config in Nix. For now, I track known-good commits via submodules / [[https://github.com/raxod502/straight.el][straight.el]], and tie them to external dependencies (all managed by Nix) in this repo. If you know a better way to do this, please [[https://dangirsh.org/contact.html][let me know]].
 
-Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in [[file:nixos/nix/sources.json][sources.json]].
+Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in [[file:nixos/nix/sources.json][sources.json]]. See the [[*Emacs][nix delaration]].
 
 * XMonad
 :PROPERTIES:
@@ -712,7 +735,7 @@ home.packages = with pkgs; [
 
   # direnv
 
-  # Upstream failing
+  # Upstream failing :(
   # julia_13
 
   ## Doom dependencies
@@ -1068,11 +1091,25 @@ Examples:
 
 As a small added benefit, I'd have the full Emacs bindings available in the input area.
 
-** [#B] Consistent copy/paste bindings
+** TODO [#B] HiDPI autotoggle
+
+I'm occasionally lucky enough to plug into a 4k screen, which is not yet a seamless experience in linux.
+
+For now I manually do the following on HiDPI screens:
+
+#+begin_src sh
+export GDK_SCALE=2
+#+end_src
+
+and change =layout.css.devPixelsPerPx= in Firefox about:config from -1 to 2.
+
+tweak font size in Firefox and Emacs.
+
+** TODO [#B] Consistent copy/paste bindings
 
 In EXWM, I used the simulation keys to have consistent Emacs copy/paste bindings everywhere. Need a solution for XMonad. Setting the GTK bindings to "emacs" didn't seem to affect for Firefox, which is (by far) my primary non-Emacs window.
 
-** [#B] Consolidate XMonad and Emacs window management
+** TODO [#B] Consolidate XMonad and Emacs window management
 
 Ideally, XMonad could manage all windows, including Emacs windows.
 
