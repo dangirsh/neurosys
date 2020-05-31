@@ -2,7 +2,7 @@
 #+subtitle: A neurotically minimal and reproducible computing environment.
 #+author: Dan Girshovich
 #+email: dan.girsh@gmail.com
-#+startup: hideblocks align entitiespretty
+#+startup: align entitiespretty
 #+options: toc:2
 
 * About
@@ -47,7 +47,7 @@ In no particular order, I found the following configurations especially helpful:
 - [[https://christine.website/blog/nixos-desktop-flow-2020-04-25][My NixOS Desktop Flow - Christine Dodrill]]
 - [[https://www.gwern.net/Choosing-Software][Choosing Software · Gwern.net]]
 
-* Table of Contents :QUOTE:TOC_4:
+* Table of Contents :QUOTE:TOC_3:
 #+BEGIN_QUOTE
 - [[#about][About]]
   - [[#inspirations][Inspirations]]
@@ -68,21 +68,6 @@ In no particular order, I found the following configurations especially helpful:
   - [[#keybindings][Keybindings]]
     - [[#default][Default]]
     - [[#custom][Custom]]
-      - [[#rebooting--restarting][Rebooting / Restarting]]
-      - [[#add-workspace-0][Add Workspace 0]]
-      - [[#launcher--window-switcher][Launcher / Window Switcher]]
-      - [[#running-emacs][Running Emacs]]
-      - [[#lock-screen][Lock Screen]]
-      - [[#horizontal-resizing][Horizontal Resizing]]
-      - [[#window-minimization--restoration][Window Minimization / Restoration]]
-      - [[#fullscreen][Fullscreen]]
-      - [[#workspace-swapping][Workspace Swapping]]
-      - [[#changing-number-of-master-windows][Changing number of master windows]]
-      - [[#easier-kill-binding][Easier Kill Binding]]
-      - [[#volume-control][Volume Control]]
-      - [[#screenshots][Screenshots]]
-      - [[#arandr][Arandr]]
-      - [[#multiple-monitors][Multiple Monitors]]
   - [[#asthetics][Asthetics]]
   - [[#screenshot][Screenshot]]
 - [[#nixos-config][Nixos Config]]
@@ -92,7 +77,6 @@ In no particular order, I found the following configurations especially helpful:
     - [[#boot][Boot]]
     - [[#networking][Networking]]
     - [[#services][Services]]
-      - [[#syncthing][Syncthing]]
     - [[#packages][Packages]]
     - [[#fonts][Fonts]]
     - [[#user-definition][User Definition]]
@@ -103,17 +87,10 @@ In no particular order, I found the following configurations especially helpful:
     - [[#environment-variables][Environment Variables]]
     - [[#packages-1][Packages]]
     - [[#programs][Programs]]
-      - [[#home-manager][Home Manager]]
-      - [[#emacs][Emacs]]
-      - [[#bash][Bash]]
-      - [[#git][Git]]
-      - [[#direnv][Direnv]]
-      - [[#ssh-1][SSH]]
-      - [[#end-1][End]]
     - [[#services-1][Services]]
-    - [[#end-2][End]]
+    - [[#end-1][End]]
     - [[#to-test-05][To test]]
-    - [[#to-add-][To add]]
+    - [[#to-add-01][To add]]
   - [[#global-constants][Global Constants]]
   - [[#hardware-specific-config][Hardware-specific Config]]
     - [[#disk-mounts][Disk Mounts]]
@@ -124,6 +101,7 @@ In no particular order, I found the following configurations especially helpful:
   - [[#consistent-copypaste-bindings][Consistent copy/paste bindings]]
   - [[#consolidate-xmonad-and-emacs-window-management][Consolidate XMonad and Emacs window management]]
   - [[#fix-indentation-in-tangled-files][Fix indentation in tangled files]]
+- [[#autoloads][Autoloads]]
 #+END_QUOTE
 
 * Host setup
@@ -209,20 +187,24 @@ I've don't use any system trays / status bars / panels, since the Emacs modeline
 
 #+begin_src haskell
 import XMonad
+
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Layout.Grid
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
-import XMonad.Actions.CycleWS (toggleWS)
-import XMonad.Layout.Minimize
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
-import qualified XMonad.StackSet as W
+
+import XMonad.Layout.Grid
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.Minimize
+import XMonad.Layout.NoBorders
 import XMonad.Layout.NoFrillsDecoration (noFrillsDeco, shrinkText,
                                          inactiveBorderColor, inactiveColor, inactiveTextColor, activeBorderColor,
                                          activeColor, activeTextColor, urgentBorderColor, urgentTextColor, decoHeight)
+import XMonad.Layout.Tabbed (simpleTabbed)
+import XMonad.Layout.ResizableTile
+
+import XMonad.Actions.CycleWS (toggleWS)
+import qualified XMonad.StackSet as W
 
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
@@ -250,10 +232,13 @@ main = xmonad $
                  (ResizableTall 1 (3/100) (1/2) []
                    ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
                    ||| noBorders Full
+                   ||| simpleTabbed
                    ||| Grid)
+
   , workspaces = map show $ [1..9] ++ [0 :: Int]
   , modMask = mod4Mask  -- super key as modifier
   , keys = \c -> myKeys c `M.union` keys def c
+  -- , manageHook = myManageHook
   , handleEventHook = ewmhDesktopsEventHook
   , startupHook = do
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
@@ -261,6 +246,7 @@ main = xmonad $
       windows $ W.greedyView "1"
   }
 #+end_src
+
 
 ** Keybindings
 
@@ -440,6 +426,8 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
+***** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
+
 ** Asthetics
 
 #+begin_src haskell 
@@ -469,6 +457,12 @@ myShellPrompt = def
        , height            = 42
        , defaultText       = []
        }
+#+end_src
+
+** COMMENT Float certain apps
+
+#+begin_src haskell
+myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
 #+end_src
 
 ** Screenshot
@@ -1010,7 +1004,7 @@ services = {
 - [ ] xclip
 - [ ] arandr
 
-*** TODO To add [/]
+*** TODO To add [0/1]
 
 - [ ] Messenging
   - unified messenger (if it exists) for dealing with the madness of:
@@ -1022,9 +1016,12 @@ services = {
     - slack
     - irc
     - riot
+  - To try
+    - [X] pidgin - just bad. no hidpi, things like signal don't sync with mobile state, clunky ui.
   - Otherwise:
     - Browser tabs for everything sans signal
     - Signal-destop
+    - maybe slack desktop
 
 
 ** Global Constants
@@ -1297,3 +1294,8 @@ Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/hom
 Quickfix is to auto-indent the tangled files, then detangle. 
 
 Using noweb references seems to be the best option: https://orgmode.org/manual/Noweb-Reference-Syntax.html. See "This feature can also be used for management of indentation in exported code snippets".
+
+* Autoloads
+# Local Variables:
+# eval: (add-hook 'after-save-hook #'org-babel-tangle nil 'local)
+# End:
