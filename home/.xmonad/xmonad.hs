@@ -1,19 +1,23 @@
 -- [[file:~/repos/neurosys/README.org::*Imports][Imports:1]]
 import XMonad
+
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Layout.Grid
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.NoBorders
-import XMonad.Layout.Fullscreen
-import XMonad.Actions.CycleWS (toggleWS)
-import XMonad.Layout.Minimize
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
-import qualified XMonad.StackSet as W
+
+import XMonad.Layout.Grid
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.Minimize
+import XMonad.Layout.NoBorders
 import XMonad.Layout.NoFrillsDecoration (noFrillsDeco, shrinkText,
                                          inactiveBorderColor, inactiveColor, inactiveTextColor, activeBorderColor,
                                          activeColor, activeTextColor, urgentBorderColor, urgentTextColor, decoHeight)
+import XMonad.Layout.Tabbed (simpleTabbed)
+import XMonad.Layout.ResizableTile
+
+import XMonad.Actions.CycleWS (toggleWS)
+import qualified XMonad.StackSet as W
 
 import XMonad.Prompt
 import XMonad.Prompt.AppLauncher as AL
@@ -39,10 +43,13 @@ main = xmonad $
                  (ResizableTall 1 (3/100) (1/2) []
                    ||| Mirror (ResizableTall 1 (3/100) (1/2) [])
                    ||| noBorders Full
+                   ||| simpleTabbed
                    ||| Grid)
+
   , workspaces = map show $ [1..9] ++ [0 :: Int]
   , modMask = mod4Mask  -- super key as modifier
   , keys = \c -> myKeys c `M.union` keys def c
+  -- , manageHook = myManageHook
   , handleEventHook = ewmhDesktopsEventHook
   , startupHook = do
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
