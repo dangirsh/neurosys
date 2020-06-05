@@ -402,6 +402,14 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
   , ((m, xK_Print), myScreenshotClipboard)
 #+end_src
 
+
+**** Keyboard
+
+#+begin_src haskell
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 60")
+#+end_src
+
+
 **** Arandr
 
 I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr scripts are for my desk / laptop.
