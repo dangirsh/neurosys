@@ -136,7 +136,6 @@ nix-channel --add "https://nixos.org/channels/nixpkgs-unstable" nixpkgs-unstable
 nix-channel update
 #+END_SRC
 
-
 * Deployment
 
 ** Get the neurosys source
@@ -164,7 +163,6 @@ rsync -Pav home/ $HOST:$HOST_HOME
 *** COMMENT Quick deploy links
 
 [[elisp:(neurosys/deploy-to-host "root@nixos-dev" "/home/dan/")][Deploy to nixos-dev]]
-
 
 * Doom Emacs
 
@@ -246,7 +244,6 @@ main = xmonad $
       windows $ W.greedyView "1"
   }
 #+end_src
-
 
 ** Keybindings
 
@@ -486,7 +483,6 @@ myScreenshot = do
 myScreenshotClipboard :: X ()
 myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/png"
 #+end_src
-
 
 * Nixos Config
 ** System-level Config
