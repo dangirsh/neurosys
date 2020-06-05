@@ -127,6 +127,10 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m, xK_Print), myScreenshotClipboard)
 -- Screenshots:2 ends here
 
+-- [[file:~/repos/neurosys/README.org::*Keyboard][Keyboard:1]]
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 60")
+-- Keyboard:1 ends here
+
 -- [[file:~/repos/neurosys/README.org::*Arandr][Arandr:1]]
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
@@ -156,7 +160,7 @@ topBarTheme = def
     , activeTextColor       = active
     , urgentBorderColor     = red
     , urgentTextColor       = yellow
-    , decoHeight            = 5
+    , decoHeight            = 10
     }
 
 
