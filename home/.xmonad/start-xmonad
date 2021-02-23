@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Identify the home of our gtkrc file, important for setting styles of
+# gtk-based applications
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+# enable for hidpi displays
+export GDK_SCALE=2
+
+setxkbmap -option 'ctrl:nocaps'
+
+# set keyboard rate
+xset r rate 160 40
+
+sudo timedatectl set-timezone Europe/Berlin
+
+# Ensure Zoom output volume stays constant
+/home/dan/my-config/scripts/fuck_zoom.sh 100 &
+
+# set trackball rate
+# xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
+
+# eye breaks
+# safeeyes &
+
+# xsetroot -solid black
+
+# Now, finally, start xmonad
+exec xmonad

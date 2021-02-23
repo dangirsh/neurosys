@@ -63,13 +63,14 @@ In no particular order, I found the following configurations especially helpful:
     - [[#rsync-script][Rsync Script]]
 - [[#doom-emacs][Doom Emacs]]
 - [[#xmonad][XMonad]]
-  - [[#imports][Imports]]
-  - [[#main][Main]]
-  - [[#keybindings][Keybindings]]
-    - [[#default][Default]]
-    - [[#custom][Custom]]
-  - [[#asthetics][Asthetics]]
-  - [[#screenshot][Screenshot]]
+  - [[#haskell-configuration][Haskell Configuration]]
+    - [[#imports][Imports]]
+    - [[#main][Main]]
+    - [[#keybindings][Keybindings]]
+    - [[#asthetics][Asthetics]]
+    - [[#screenshot][Screenshot]]
+  - [[#start-script][Start Script]]
+    - [[#desktop-entry-pointing-to-start-script][Desktop Entry Pointing to Start Script]]
 - [[#nixos-config][Nixos Config]]
   - [[#system-level-config][System-level Config]]
     - [[#nix][Nix]]
@@ -177,15 +178,16 @@ Until projects like [[https://github.com/vlaci/nix-doom-emacs][nix-doom-emacs]] 
 Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay][emacs-overlay]], which is version pinned via [[https://github.com/nmattia/niv][niv]] in [[file:nixos/nix/sources.json][sources.json]]. See the [[*Emacs][nix delaration]].
 
 * XMonad
-:PROPERTIES:
-:header-args: :tangle home/.xmonad/xmonad.hs :comments link
-:END:
 
 I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Instead, I have the interface to the few things I need configured here in Haskell, or elsewhere ([[*Doom Emacs][Emacs]]).
 
 I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids dependening on xmobar/polybar.
 
-** Imports
+** Haskell Configuration
+:PROPERTIES:
+:header-args: :tangle home/.xmonad/xmonad.hs :comments link
+:END:
+*** Imports
 :PROPERTIES:
 :ID:       f103b573-5fe1-4ebd-ae35-e6f1a73ecdad
 :END:
@@ -222,7 +224,7 @@ import Data.Default (def)
 import Data.Map as M (fromList,union, Map())
 #+end_src
 
-** Main
+*** Main
 :PROPERTIES:
 :ID:       099e2205-fc29-41c0-86d4-ce9ac62437c3
 :END:
@@ -235,7 +237,7 @@ main = xmonad $
   fullscreenSupport def {
     borderWidth = 1
   , focusedBorderColor = blue
-  , terminal = "emacsclient -c -e \"(vterm)\""  --assumes emacs server running
+  , terminal = "alacritty"
   , layoutHook = smartBorders $  -- no borders for sole windows
                  noFrillsDeco shrinkText topBarTheme $   -- visually mark the focused window with a top bar
                  minimize
@@ -258,9 +260,9 @@ main = xmonad $
   }
 #+end_src
 
-** Keybindings
+*** Keybindings
 
-*** Default
+**** Default
 
 From https://xmonad.org/manpage.html#default-keyboard-bindings
 
@@ -299,7 +301,7 @@ From https://xmonad.org/manpage.html#default-keyboard-bindings
 | mod-button2       | Raise the window to the top of the stack                                      |
 | mod-button3       | Set the window to floating mode and resize by dragging                        |
 
-*** Custom
+**** Custom
 :PROPERTIES:
 :ID:       bdb34094-5606-4b90-9659-27f2cc21831a
 :END:
@@ -309,7 +311,7 @@ myKeys :: XConfig t -> M.Map (KeyMask, KeySym) (X ())
 myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 #+end_src
 
-**** Rebooting / Restarting
+***** Rebooting / Restarting
 :PROPERTIES:
 :ID:       a4300d94-b7ee-46c8-8649-83003a920e9a
 :END:
@@ -319,7 +321,7 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m .|. shiftMask .|. mod1Mask, xK_i), spawn "xmonad --recompile && xmonad --restart")
 #+end_src
 
-**** Add Workspace 0
+***** Add Workspace 0
 :PROPERTIES:
 :ID:       0e983f1b-4867-4ae1-bdd7-0eb1fd599656
 :END:
@@ -329,7 +331,7 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m .|. shiftMask, xK_0), windows $ W.shift "0")
 #+end_src
 
-**** Launcher / Window Switcher
+***** Launcher / Window Switcher
 :PROPERTIES:
 :ID:       4a65a200-4d49-4b70-8261-c420289f1d68
 :END:
@@ -341,7 +343,7 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
 #+end_src
 
-**** Running Emacs
+***** Running Emacs
 :PROPERTIES:
 :ID:       03709ef1-9ca7-4593-a5a1-973ed3354cb2
 :END:
@@ -351,7 +353,7 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   , ((m .|. shiftMask, xK_n), spawn "~/.emacs.d/bin/doom run")
 #+end_src
 
-**** Lock Screen
+***** Lock Screen
 :PROPERTIES:
 :ID:       1e954aa0-dc30-40a2-88a4-dd94bd92ba32
 :END:
@@ -360,7 +362,7 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   , ((m .|. shiftMask .|. mod1Mask, xK_o), spawn "xtrlock -b")
 #+end_src
 
-**** Horizontal Resizing
+***** Horizontal Resizing
 :PROPERTIES:
 :ID:       634eac8e-780e-459c-9048-2b4a86a03d58
 :END:
@@ -372,7 +374,7 @@ An obvious missing default...
   , ((m .|. shiftMask, xK_l), sendMessage MirrorExpand)
 #+end_src
 
-**** Window Minimization / Restoration
+***** Window Minimization / Restoration
 :PROPERTIES:
 :ID:       52db6918-73ac-4ea0-97fa-e2d687579ecf
 :END:
@@ -382,7 +384,7 @@ An obvious missing default...
   , ((m .|. shiftMask, xK_m), withLastMinimized maximizeWindowAndFocus)
 #+end_src
 
-**** Fullscreen
+***** Fullscreen
 :PROPERTIES:
 :ID:       24dace8c-4205-4956-b4c5-5223bd999826
 :END:
@@ -391,7 +393,7 @@ An obvious missing default...
   , ((m .|. shiftMask, xK_f), withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f)
 #+end_src
 
-**** Workspace Swapping
+***** Workspace Swapping
 :PROPERTIES:
 :ID:       c3bb35a1-49b5-481d-b6a3-42d0fdae5114
 :END:
@@ -402,7 +404,7 @@ Using ~mod+comma~ quickly swap between workspaces is /very handy/.
   , ((m, xK_comma), toggleWS)
 #+end_src
 
-**** Changing number of master windows
+***** Changing number of master windows
 :PROPERTIES:
 :ID:       076000a3-93de-41f3-8768-616f43e6d6bc
 :END:
@@ -416,7 +418,7 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
   , ((m .|. shiftMask, xK_period), sendMessage (IncMasterN (-1)))
 #+end_src
 
-**** Easier Kill Binding
+***** Easier Kill Binding
 :PROPERTIES:
 :ID:       f67e9d5b-2ff4-4200-8fde-dd3a0871ea05
 :END:
@@ -429,7 +431,7 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
   , ((m, xK_q), kill)
 #+end_src
 
-**** Volume Control
+***** Volume Control
 :PROPERTIES:
 :ID:       49308b27-b641-4e31-b811-b4bad6e740dd
 :END:
@@ -441,7 +443,7 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
   , ((m .|. shiftMask, xK_Down),spawn "amixer sset Master 5%-")
 #+end_src
 
-**** Screenshots
+***** Screenshots
 :PROPERTIES:
 :ID:       be6141e6-18de-4dff-9445-51c2635f5c93
 :END:
@@ -455,7 +457,7 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 #+end_src
 
 
-**** Keyboard
+***** Keyboard
 :PROPERTIES:
 :ID:       af2e9701-ee14-4de2-b9e7-4944c53e1017
 :END:
@@ -465,7 +467,7 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 #+end_src
 
 
-**** Arandr
+***** Arandr
 :PROPERTIES:
 :ID:       9e55a839-1bcc-4442-a6b8-98b33f6d39c3
 :END:
@@ -477,7 +479,7 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
 #+end_src
 
-**** Multiple Monitors
+***** Multiple Monitors
 :PROPERTIES:
 :ID:       f8ac74cc-5ca6-424f-bb20-f4fe05750b65
 :END:
@@ -495,9 +497,9 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
-***** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
+****** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
 
-** Asthetics
+*** Asthetics
 :PROPERTIES:
 :ID:       b7cecd28-8036-4451-8700-e19d5e5335cc
 :END:
@@ -531,13 +533,13 @@ myShellPrompt = def
        }
 #+end_src
 
-** COMMENT Float certain apps
+*** COMMENT Float certain apps
 
 #+begin_src haskell
 myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
 #+end_src
 
-** Screenshot
+*** Screenshot
 :PROPERTIES:
 :ID:       0d76798f-6aa5-4d7d-89f7-455289a146b2
 :END:
@@ -552,6 +554,61 @@ myScreenshot = do
 #+begin_src haskell
 myScreenshotClipboard :: X ()
 myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/png"
+#+end_src
+
+** Start Script
+:PROPERTIES:
+:ID:       2d6a5556-05d8-4d89-b88f-678a69647de9
+:END:
+
+This is currently only used by when on non-NixOS systems (e.g. Ubuntu).
+
+#+begin_src sh :tangle home/.xmonad/start-xmonad
+#!/bin/bash
+
+# Identify the home of our gtkrc file, important for setting styles of
+# gtk-based applications
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+
+# enable for hidpi displays
+export GDK_SCALE=2
+
+setxkbmap -option 'ctrl:nocaps'
+
+# set keyboard rate
+xset r rate 160 40
+
+sudo timedatectl set-timezone Europe/Berlin
+
+# Ensure Zoom output volume stays constant
+/home/dan/my-config/scripts/fuck_zoom.sh 100 &
+
+# set trackball rate
+# xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
+
+# eye breaks
+# safeeyes &
+
+# xsetroot -solid black
+
+# Now, finally, start xmonad
+exec xmonad
+#+end_src
+
+*** Desktop Entry Pointing to Start Script
+:PROPERTIES:
+:ID:       679f4869-7950-466a-b0d1-8f0cbbd172e1
+:END:
+
+[[file:/usr/share/xsessions/xmonad.desktop]]
+
+#+begin_src conf
+[Desktop Entry]
+Name=XMonad
+Comment=Lightweight tiling window manager
+Exec=/home/dan/.xmonad/start-xmonad
+Icon=xmonad.png
+Type=XSession
 #+end_src
 
 * Nixos Config

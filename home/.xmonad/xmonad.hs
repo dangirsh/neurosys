@@ -38,7 +38,7 @@ main = xmonad $
   fullscreenSupport def {
     borderWidth = 1
   , focusedBorderColor = blue
-  , terminal = "emacsclient -c -e \"(vterm)\""  --assumes emacs server running
+  , terminal = "alacritty"
   , layoutHook = smartBorders $  -- no borders for sole windows
                  noFrillsDeco shrinkText topBarTheme $   -- visually mark the focused window with a top bar
                  minimize
