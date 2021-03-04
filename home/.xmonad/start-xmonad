@@ -25,5 +25,8 @@ sudo timedatectl set-timezone Europe/Berlin
 
 # xsetroot -solid black
 
+# Clipboard manager (used with rofi)
+greenclip daemon &
+
 # Now, finally, start xmonad
 exec xmonad

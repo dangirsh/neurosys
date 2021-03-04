@@ -340,7 +340,10 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
 
 #+begin_src haskell
   , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy")
+  , ((m .|. mod1Mask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
+  -- Like M-y for helm-show-kill-ring in Emacs
+  , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
 #+end_src
 
 ***** Running Emacs
@@ -563,7 +566,7 @@ myScreenshotClipboard = spawn  "maim -s | xclip -selection clipboard -t image/pn
 
 This is currently only used by when on non-NixOS systems (e.g. Ubuntu).
 
-#+begin_src sh :tangle home/.xmonad/start-xmonad
+#+begin_src sh :tangle home/.xmonad/start-xmonad :tangle-mode (identity #o775)
 #!/bin/bash
 
 # Identify the home of our gtkrc file, important for setting styles of
