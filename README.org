@@ -344,6 +344,7 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
+  , ((m, xK_u), spawn "/home/dan/my-config/scripts/yubi-clipboard.sh")
 #+end_src
 
 ***** Running Emacs
