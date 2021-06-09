@@ -78,10 +78,11 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 
 -- [[id:4a65a200-4d49-4b70-8261-c420289f1d68][Launcher / Window Switcher:1]]
   , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy")
-  , ((m .|. mod1Mask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
+  , ((m .|. shiftMask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
+  , ((m, xK_u), spawn "/home/dan/my-config/scripts/yubi-clipboard.sh")
 -- Launcher / Window Switcher:1 ends here
 
 -- [[id:03709ef1-9ca7-4593-a5a1-973ed3354cb2][Running Emacs:1]]

@@ -118,12 +118,13 @@ services = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
         x1carbon.id = "IOINCUM-QKL34MC-RSPJETE-CUW5D2Y-3CMDSLD-72HNXZI-7U3TN44-35CLKQN";
+        lebobo.id = "PX4LTUE-H2ROD4V-LMWPTJC-JZ4DEEP-UI5XKL7-RKW4AYD-KCITAZN-23R3ZQS";
         pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon"  "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon" "lebobo" "pixel3a-2"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -134,7 +135,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon" ];
+          devices = [ "nixos-dev"  "x1carbon" "lebobo" ];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -144,8 +145,8 @@ services = {
           versioning.params.keep = "5";
         };
         work = rec {
-          id = "work";
-          devices = [ "nixos-dev" "x1carbon" ];
+          id = "d7svv-zjsz2";
+          devices = [ "nixos-dev" "x1carbon" "lebobo" ];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;

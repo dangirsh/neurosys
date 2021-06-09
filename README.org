@@ -340,7 +340,7 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
 
 #+begin_src haskell
   , ((m, xK_p), spawn "rofi -show drun -modi drun -show-icons -matching fuzzy")
-  , ((m .|. mod1Mask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
+  , ((m .|. shiftMask, xK_p), spawn "GDK_SCALE=2 rofi -show drun -modi drun -show-icons -matching fuzzy")
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
@@ -575,7 +575,7 @@ This is currently only used by when on non-NixOS systems (e.g. Ubuntu).
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 
 # enable for hidpi displays
-export GDK_SCALE=2
+export GDK_SCALE=1
 
 setxkbmap -option 'ctrl:nocaps'
 
@@ -586,6 +586,14 @@ sudo timedatectl set-timezone Europe/Berlin
 
 # Ensure Zoom output volume stays constant
 /home/dan/my-config/scripts/fuck_zoom.sh 100 &
+
+# Clipboard manager (used with rofi)
+greenclip daemon &
+
+# Tresorit daemon
+# ~/.local/share/tresorit/tresorit-cli start
+
+ssh-add gitlab21_protonmail_id_rsa
 
 # set trackball rate
 # xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
@@ -774,12 +782,13 @@ services = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
         x1carbon.id = "IOINCUM-QKL34MC-RSPJETE-CUW5D2Y-3CMDSLD-72HNXZI-7U3TN44-35CLKQN";
+        lebobo.id = "PX4LTUE-H2ROD4V-LMWPTJC-JZ4DEEP-UI5XKL7-RKW4AYD-KCITAZN-23R3ZQS";
         pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon"  "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon" "lebobo" "pixel3a-2"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -790,7 +799,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon" ];
+          devices = [ "nixos-dev"  "x1carbon" "lebobo" ];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -800,8 +809,8 @@ services = {
           versioning.params.keep = "5";
         };
         work = rec {
-          id = "work";
-          devices = [ "nixos-dev" "x1carbon" ];
+          id = "d7svv-zjsz2";
+          devices = [ "nixos-dev" "x1carbon" "lebobo" ];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;
