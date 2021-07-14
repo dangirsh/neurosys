@@ -20,10 +20,8 @@ sudo timedatectl set-timezone Europe/Berlin
 # Clipboard manager (used with rofi)
 greenclip daemon &
 
-# Tresorit daemon
-# ~/.local/share/tresorit/tresorit-cli start
-
-ssh-add gitlab21_protonmail_id_rsa
+# Start espanso
+espanso restart
 
 # set trackball rate
 # xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true

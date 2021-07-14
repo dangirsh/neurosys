@@ -344,7 +344,6 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
-  , ((m, xK_u), spawn "/home/dan/my-config/scripts/yubi-clipboard.sh")
 #+end_src
 
 ***** Running Emacs
@@ -550,7 +549,7 @@ myManageHook = composeAll [ className =? "Pidgin" --> doFloat]
 
 #+begin_src haskell
 myScreenshot = do
-  -- init takes kare of the trailing newline character returned by date
+  -- init takes care of the trailing newline character returned by date
   date <- init <$> runProcessWithInput "date" ["+%Y-%m-%d-%H:%M:%S"] []
   AL.launchApp myShellPrompt { defaultText = "~/screenshots/" ++ date ++ ".png"} "maim -s"
 #+end_src
@@ -590,10 +589,8 @@ sudo timedatectl set-timezone Europe/Berlin
 # Clipboard manager (used with rofi)
 greenclip daemon &
 
-# Tresorit daemon
-# ~/.local/share/tresorit/tresorit-cli start
-
-ssh-add gitlab21_protonmail_id_rsa
+# Start espanso
+espanso restart
 
 # set trackball rate
 # xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true

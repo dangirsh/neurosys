@@ -82,7 +82,6 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
-  , ((m, xK_u), spawn "/home/dan/my-config/scripts/yubi-clipboard.sh")
 -- Launcher / Window Switcher:1 ends here
 
 -- [[id:03709ef1-9ca7-4593-a5a1-973ed3354cb2][Running Emacs:1]]
@@ -182,7 +181,7 @@ myShellPrompt = def
 
 -- [[id:0d76798f-6aa5-4d7d-89f7-455289a146b2][Screenshot:1]]
 myScreenshot = do
-  -- init takes kare of the trailing newline character returned by date
+  -- init takes care of the trailing newline character returned by date
   date <- init <$> runProcessWithInput "date" ["+%Y-%m-%d-%H:%M:%S"] []
   AL.launchApp myShellPrompt { defaultText = "~/screenshots/" ++ date ++ ".png"} "maim -s"
 -- Screenshot:1 ends here
