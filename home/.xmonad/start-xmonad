@@ -12,10 +12,11 @@ setxkbmap -option 'ctrl:nocaps'
 # set keyboard rate
 xset r rate 160 40
 
-sudo timedatectl set-timezone Europe/Berlin
+# sudo timedatectl set-timezone Europe/Berlin
+sudo timedatectl set-timezone America/New_York
 
 # Ensure Zoom output volume stays constant
-/home/dan/my-config/scripts/fuck_zoom.sh 100 &
+/home/dan/scripts/fuck_zoom.sh 100 &
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
@@ -29,7 +30,12 @@ espanso restart
 # eye breaks
 # safeeyes &
 
+# Wallpaper
+feh --bg-fill --randomize ~/HubbleImages/* &
 # xsetroot -solid black
+
+# Config in ~/.config/redshift/redshift.conf
+redshift &
 
 # Now, finally, start xmonad
 exec xmonad

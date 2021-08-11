@@ -90,7 +90,7 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- Running Emacs:1 ends here
 
 -- [[id:1e954aa0-dc30-40a2-88a4-dd94bd92ba32][Lock Screen:1]]
-  , ((m .|. shiftMask .|. mod1Mask, xK_o), spawn "xtrlock -b")
+  , ((m .|. shiftMask .|. mod1Mask, xK_o), spawn "~/scripts/fingerprint-lock.sh")
 -- Lock Screen:1 ends here
 
 -- [[id:634eac8e-780e-459c-9048-2b4a86a03d58][Horizontal Resizing:1]]
@@ -138,8 +138,8 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- Keyboard:1 ends here
 
 -- [[id:9e55a839-1bcc-4442-a6b8-98b33f6d39c3][Arandr:1]]
-  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh" )
-  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh" )
+  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
+  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
 -- Arandr:1 ends here
 
 -- [[id:f8ac74cc-5ca6-424f-bb20-f4fe05750b65][Multiple Monitors:1]]

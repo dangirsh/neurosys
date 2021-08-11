@@ -1,4 +1,4 @@
-# [[id:d206e175-97f3-485c-a580-c3b502578ffc][Systacsem-level Config:1]]
+# [[id:d206e175-97f3-485c-a580-c3b502578ffc][System-level Config:1]]
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
@@ -16,7 +16,7 @@ in {
     # Allow unfree, which is required for some drivers.
     allowUnfree = true;
   };
-# Systacsem-level Config:1 ends here
+# System-level Config:1 ends here
 
 # [[id:ac54d86b-9aad-4d35-af3e-663a45da9c88][Nix:1]]
 nix = {
