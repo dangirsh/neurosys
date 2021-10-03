@@ -52,7 +52,7 @@ main = xmonad $
   , workspaces = map show $ [1..9] ++ [0 :: Int]
   , modMask = mod4Mask  -- super key as modifier
   , keys = \c -> myKeys c `M.union` keys def c
-  -- , manageHook = myManageHook
+  , manageHook = myManageHook
   , handleEventHook = ewmhDesktopsEventHook
   , startupHook = do
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
@@ -90,7 +90,7 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- Running Emacs:1 ends here
 
 -- [[id:1e954aa0-dc30-40a2-88a4-dd94bd92ba32][Lock Screen:1]]
-  , ((m .|. shiftMask .|. mod1Mask, xK_o), spawn "~/scripts/fingerprint-lock.sh")
+  , ((m .|. shiftMask .|. mod1Mask, xK_o), spawn "xtrlock -b")
 -- Lock Screen:1 ends here
 
 -- [[id:634eac8e-780e-459c-9048-2b4a86a03d58][Horizontal Resizing:1]]
@@ -134,12 +134,13 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- Screenshots:2 ends here
 
 -- [[id:af2e9701-ee14-4de2-b9e7-4944c53e1017][Keyboard:1]]
-  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 60")
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 90")
 -- Keyboard:1 ends here
 
 -- [[id:9e55a839-1bcc-4442-a6b8-98b33f6d39c3][Arandr:1]]
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
+  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
 -- Arandr:1 ends here
 
 -- [[id:f8ac74cc-5ca6-424f-bb20-f4fe05750b65][Multiple Monitors:1]]
@@ -178,6 +179,10 @@ myShellPrompt = def
        , defaultText       = []
        }
 -- Asthetics:1 ends here
+
+-- [[id:92898604-cb43-4368-938f-a390ab65bbc3][Float certain apps:1]]
+myManageHook = composeAll [ className =? "zoom" --> doFloat]
+-- Float certain apps:1 ends here
 
 -- [[id:0d76798f-6aa5-4d7d-89f7-455289a146b2][Screenshot:1]]
 myScreenshot = do

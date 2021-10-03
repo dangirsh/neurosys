@@ -117,14 +117,13 @@ services = {
     declarative = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
-        x1carbon.id = "IOINCUM-QKL34MC-RSPJETE-CUW5D2Y-3CMDSLD-72HNXZI-7U3TN44-35CLKQN";
-        lebobo.id = "PX4LTUE-H2ROD4V-LMWPTJC-JZ4DEEP-UI5XKL7-RKW4AYD-KCITAZN-23R3ZQS";
+        x1carbon9.id = "EIZV5LR-F3JILKF-7MD5UMZ-KYRW37L-RVJ2WI4-7LQD7VC-U5BSEBD-YMGQPQ3";
         pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon" "lebobo" "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon9" "pixel3a-2"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -135,7 +134,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon" "lebobo" ];
+          devices = [ "nixos-dev"  "x1carbon9" ];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -146,7 +145,7 @@ services = {
         };
         work = rec {
           id = "d7svv-zjsz2";
-          devices = [ "nixos-dev" "x1carbon" "lebobo" ];
+          devices = [ "nixos-dev" "x1carbon9" ];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -162,10 +161,11 @@ services = {
 
 # [[id:58f00c2f-1aa2-4d67-88a1-8674b5a676fe][Tarsnap:1]]
 tarsnap.enable = true;
-tarsnap.keyfile = "/bkp/Sync/nixos-dev-tarsnap.key";
+tarsnap.keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
+tarsnap.cachedir = "/var/cache/tarsnap/nixos-dev"
 tarsnap.archives = {
   main = {
-    keyfile = "/bkp/Sync/nixos-dev-tarsnap.key";
+    keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
     directories = ["/bkp/Sync" "/bkp/Work" "/bkp/Media"];
   };
 };
