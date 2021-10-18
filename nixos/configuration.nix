@@ -1,4 +1,4 @@
-# [[id:d206e175-97f3-485c-a580-c3b502578ffc][System-level Config:1]]
+# [[file:../README.org::*System-level Config][System-level Config:1]]
 { config, pkgs, ... }:
 let
   sources = import ./nix/sources.nix;
@@ -18,7 +18,7 @@ in {
   };
 # System-level Config:1 ends here
 
-# [[id:ac54d86b-9aad-4d35-af3e-663a45da9c88][Nix:1]]
+# [[file:../README.org::*Nix][Nix:1]]
 nix = {
   useSandbox = true;
   autoOptimiseStore = true;
@@ -44,11 +44,11 @@ nix = {
 };
 # Nix:1 ends here
 
-# [[id:2753468b-59cf-4cb5-bd79-02b25d9ec2fd][Timezone:1]]
+# [[file:../README.org::*Timezone][Timezone:1]]
 time.timeZone = "America/Los_Angeles";
 # Timezone:1 ends here
 
-# [[id:7e999695-84f9-4ce5-8b6e-c7465686a100][Boot:1]]
+# [[file:../README.org::*Boot][Boot:1]]
 boot = {
   cleanTmpDir = true;
 
@@ -69,7 +69,7 @@ boot = {
 };
 # Boot:1 ends here
 
-# [[id:a56040d6-f62f-48d6-be30-93604accde6b][Networking:1]]
+# [[file:../README.org::*Networking][Networking:1]]
 networking.useDHCP = false;
 networking.usePredictableInterfaceNames = false;
 networking.interfaces.eth0.useDHCP = true;
@@ -81,7 +81,7 @@ networking.hostName = "nixos-dev";
 networking.interfaces.eth0.tempAddress = "disabled";
 # Networking:1 ends here
 
-# [[id:73de180a-03a8-49b3-a052-3c98bb5c2bd2][Services:1]]
+# [[file:../README.org::*Services][Services:1]]
 services = {
 
   xserver = {
@@ -106,7 +106,7 @@ services = {
   };
 # Services:1 ends here
 
-# [[id:b7028333-4e79-4020-a79d-8becefb7f430][Syncthing:1]]
+# [[file:../README.org::*Syncthing][Syncthing:1]]
   # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/networking/syncthing.nix
   syncthing = {
     enable = true;
@@ -159,7 +159,7 @@ services = {
   };
 # Syncthing:1 ends here
 
-# [[id:58f00c2f-1aa2-4d67-88a1-8674b5a676fe][Tarsnap:1]]
+# [[file:../README.org::*Tarsnap][Tarsnap:1]]
 tarsnap.enable = true;
 tarsnap.keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
 tarsnap.cachedir = "/var/cache/tarsnap/nixos-dev"
@@ -171,12 +171,12 @@ tarsnap.archives = {
 };
 # Tarsnap:1 ends here
 
-# [[id:cf0131f7-bad4-4a4d-a622-71fefc111d82][End:1]]
+# [[file:../README.org::*End][End:1]]
 };
 # virtualisation.docker.enable = true;
 # End:1 ends here
 
-# [[id:367b0c5b-a853-49f2-839f-e26f554a1f5c][Packages:1]]
+# [[file:../README.org::*Packages][Packages:1]]
 environment.systemPackages = with pkgs; [
   coreutils binutils
   curl wget
@@ -191,7 +191,7 @@ environment.systemPackages = with pkgs; [
 ];
 # Packages:1 ends here
 
-# [[id:2ae32431-9f9a-447e-a27c-1fde8ed52a71][Fonts:1]]
+# [[file:../README.org::*Fonts][Fonts:1]]
 fonts = {
   enableFontDir = true;
   enableGhostscriptFonts = true;
@@ -202,7 +202,7 @@ fonts = {
 };
 # Fonts:1 ends here
 
-# [[id:b525bfc9-8a31-4247-baf1-c1ff9125e97a][User Definition:1]]
+# [[file:../README.org::*User Definition][User Definition:1]]
 security.sudo.wheelNeedsPassword = false;
 
 users.mutableUsers = false;
@@ -226,7 +226,7 @@ users.extraUsers.${config.settings.username} = {
 home-manager.users.dan = import ./home.nix ;
 # User Definition:1 ends here
 
-# [[id:c427e0b1-ff8d-4cce-b01a-e1102b41c906][SSH:1]]
+# [[file:../README.org::*SSH][SSH:1]]
 services.openssh = {
   enable = true;
   forwardX11 = true;
@@ -241,10 +241,10 @@ users.users.${config.settings.username}.openssh.authorizedKeys.keys = [
 programs.ssh.startAgent = true;
 # SSH:1 ends here
 
-# [[id:193aada6-fd41-4ec5-9d51-c7964419621f][X2Go Client:1]]
+# [[file:../README.org::*X2Go Client][X2Go Client:1]]
   # programs.x2goserver.enable = true;
 # X2Go Client:1 ends here
 
-# [[id:3606c19d-4d09-4c08-8539-fb993b9ed3b9][End:1]]
+# [[file:../README.org::*End][End:1]]
 }
 # End:1 ends here

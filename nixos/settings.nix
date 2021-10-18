@@ -1,4 +1,4 @@
-# [[id:55b66861-0727-404b-b10b-f9adb7151e5e][Global Constants:1]]
+# [[file:../README.org::*Global Constants][Global Constants:1]]
 {config, pkgs, lib, ...}:
 
 with lib;

@@ -10,7 +10,7 @@ export GDK_SCALE=1
 setxkbmap -option 'ctrl:nocaps'
 
 # set keyboard rate
-xset r rate 160 70
+xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York

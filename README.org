@@ -184,6 +184,7 @@ I use XMonad as a window manager and minimal desktop environment. I don't run an
 
 I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids dependening on xmobar/polybar.
 
+
 ** Haskell Configuration
 :PROPERTIES:
 :header-args: :tangle home/.xmonad/xmonad.hs :comments link
@@ -354,7 +355,8 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
 
 #+begin_src haskell
   , ((m, xK_n), spawn "emacsclient -c")
-  , ((m .|. shiftMask, xK_n), spawn "~/.emacs.d/bin/doom run")
+  , ((m .|. shiftMask .|. mod1Mask, xK_n), spawn "~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask, xK_n), spawn "EMACS_WORK_MODE=1 ~/scripts/run_emacs.sh")
 #+end_src
 
 ***** Lock Screen
@@ -467,7 +469,7 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 :END:
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 90")
+  , ((m .|. shiftMask, xK_i), spawn "setxkbmap -option 'ctrl:nocaps' && xset r rate 160 80")
 #+end_src
 
 
@@ -498,7 +500,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
@@ -544,7 +546,7 @@ myShellPrompt = def
 :END:
 
 #+begin_src haskell
-myManageHook = composeAll [ className =? "zoom" --> doFloat]
+myManageHook = composeAll [ className =? "zoom" --> doFloat, appName =? "Open File" --> doFloat]
 #+end_src
 
 *** Screenshot
@@ -584,7 +586,7 @@ export GDK_SCALE=1
 setxkbmap -option 'ctrl:nocaps'
 
 # set keyboard rate
-xset r rate 160 70
+xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
