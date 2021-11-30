@@ -118,12 +118,12 @@ services = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
         x1carbon9.id = "EIZV5LR-F3JILKF-7MD5UMZ-KYRW37L-RVJ2WI4-7LQD7VC-U5BSEBD-YMGQPQ3";
-        pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
+        pixel6-pro.id = "DISECZT-3ILXZ2S-B7BTYBI-R6KKLH2-YYIDZGD-4LP2OEF-NAURN57-ZPR6XAD";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon9" "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon9" "pixel6-pro"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -134,7 +134,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon9" ];
+          devices = [ "nixos-dev"  "x1carbon9" "pixel6-pro"];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -145,7 +145,7 @@ services = {
         };
         work = rec {
           id = "d7svv-zjsz2";
-          devices = [ "nixos-dev" "x1carbon9" ];
+          devices = [ "nixos-dev" "x1carbon9" "pixel6-pro"];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -162,7 +162,6 @@ services = {
 # [[file:../README.org::*Tarsnap][Tarsnap:1]]
 tarsnap.enable = true;
 tarsnap.keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
-tarsnap.cachedir = "/var/cache/tarsnap/nixos-dev"
 tarsnap.archives = {
   main = {
     keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";

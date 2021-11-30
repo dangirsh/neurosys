@@ -14,6 +14,7 @@ xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
+# sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
 /home/dan/scripts/fuck_zoom.sh 100 &

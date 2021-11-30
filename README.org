@@ -9,7 +9,7 @@
 
 My neurosys encompasses configuration for:
 
-- [[https://nixods.org/][NixOS]] ([[#nixos-config][config]])
+- [[https://nixos.org/][NixOS]] ([[#nixos-config][config]])
 - [[https://xmonad.org/][XMonad]] ([[#xmonad][config]])
 - [[https://github.com/hlissner/doom-emacs][Doom Emacs]] ([[#doom-emacs][config]])
   - Includes a [[https://github.com/dangirsh/.doom.d/tree/master/modules/personal/neurosys][neurosys module]] with utilities (e.g. remote deployment)
@@ -215,6 +215,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.MultiColumns
 
 import XMonad.Actions.CycleWS (toggleWS)
+import XMonad.Actions.CycleRecentWS (cycleRecentWS)
 import qualified XMonad.StackSet as W
 
 import XMonad.Prompt
@@ -486,6 +487,13 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
   , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
 #+end_src
 
+***** Cycle Recent Workspace
+
+#+begin_src haskell
+  , ((m .|. shiftMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_BackSpace)
+#+end_src
+
+
 ***** Multiple Monitors
 :PROPERTIES:
 :ID:       f8ac74cc-5ca6-424f-bb20-f4fe05750b65
@@ -590,6 +598,7 @@ xset r rate 160 80
 
 sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
+# sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
 /home/dan/scripts/fuck_zoom.sh 100 &
@@ -792,12 +801,12 @@ services = {
       devices = {
         nixos-dev.id = "EEMRJQE-TBONTUL-UBGJ6FT-AAUS25K-COP3VHE-WERN7IN-PTNZ63Z-GZZX2AY";
         x1carbon9.id = "EIZV5LR-F3JILKF-7MD5UMZ-KYRW37L-RVJ2WI4-7LQD7VC-U5BSEBD-YMGQPQ3";
-        pixel3a-2.id = "NT5ZJ55-JBWGL4D-WIK57V3-T3RXF2Q-HLMHV7U-DLGAZ5U-ZSHSPYZ-M5NLQAC";
+        pixel6-pro.id = "DISECZT-3ILXZ2S-B7BTYBI-R6KKLH2-YYIDZGD-4LP2OEF-NAURN57-ZPR6XAD";
       };
       folders = {
         sync = rec {
           id = "at23u-zmxto";
-          devices = [ "nixos-dev" "x1carbon9" "pixel3a-2"];
+          devices = [ "nixos-dev" "x1carbon9" "pixel6-pro"];
           path = "/bkp/Sync";
           watch = false;
           rescanInterval = 3600 * 1;
@@ -808,7 +817,7 @@ services = {
         };
         media = rec {
           id = "media";
-          devices = [ "nixos-dev"  "x1carbon9" ];
+          devices = [ "nixos-dev"  "x1carbon9" "pixel6-pro"];
           path = "/bkp/Media";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -819,7 +828,7 @@ services = {
         };
         work = rec {
           id = "d7svv-zjsz2";
-          devices = [ "nixos-dev" "x1carbon9" ];
+          devices = [ "nixos-dev" "x1carbon9" "pixel6-pro"];
           path = "/bkp/Work";
           watch = false;
           rescanInterval = 3600 * 6;
@@ -843,7 +852,6 @@ services = {
 #+begin_src nix
 tarsnap.enable = true;
 tarsnap.keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";
-tarsnap.cachedir = "/var/cache/tarsnap/nixos-dev"
 tarsnap.archives = {
   main = {
     keyfile = "/bkp/Sync/keys/nixos-dev-tarsnap.key";

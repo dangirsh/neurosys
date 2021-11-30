@@ -19,6 +19,7 @@ import XMonad.Layout.ResizableTile
 import XMonad.Layout.MultiColumns
 
 import XMonad.Actions.CycleWS (toggleWS)
+import XMonad.Actions.CycleRecentWS (cycleRecentWS)
 import qualified XMonad.StackSet as W
 
 import XMonad.Prompt
@@ -143,6 +144,10 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
   , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
 -- Arandr:1 ends here
+
+-- [[file:../../README.org::*Cycle Recent Workspace][Cycle Recent Workspace:1]]
+  , ((m .|. shiftMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_BackSpace)
+-- Cycle Recent Workspace:1 ends here
 
 -- [[file:../../README.org::*Multiple Monitors][Multiple Monitors:1]]
   ] ++
