@@ -182,7 +182,7 @@ Emacs itself is tracked via the [[https://github.com/nix-community/emacs-overlay
 
 I use XMonad as a window manager and minimal desktop environment. I don't run any additional desktop environment (e.g. XFCE). Instead, I have the interface to the few things I need configured here in Haskell, or elsewhere ([[*Doom Emacs][Emacs]]).
 
-I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids dependening on xmobar/polybar.
+I've don't use any system trays / status bars / panels, since the Emacs modeline is enough for me. This choice reduces the complexity of the XMonad configuration, and avoids depending on xmobar/polybar.
 
 
 ** Haskell Configuration
@@ -519,7 +519,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
 :ID:       b7cecd28-8036-4451-8700-e19d5e5335cc
 :END:
 
-#+begin_src haskell 
+#+begin_src haskell
 red     = "#dc322f"
 blue    = "#268bd2"
 yellow  = "#b58900"
@@ -1183,6 +1183,9 @@ git = {
 #+end_src
 
 *** Services
+:PROPERTIES:
+:ID:       9e5cb8a0-7483-4781-aafa-549b48c5316d
+:END:
 
 #+BEGIN_SRC nix
 services = {
@@ -1218,7 +1221,7 @@ services = {
 
 *** End
 
-#+BEGIN_SRC nix 
+#+BEGIN_SRC nix
 }
 #+END_SRC
 
@@ -1523,7 +1526,7 @@ systemctl --user restart keybase.gui.service
 #+RESULTS:
 
 
-** DONE [#B] Consistent copy/paste bindings
+** TODO [#B] Consistent copy/paste bindings
 
 In EXWM, I used the simulation keys to have consistent Emacs copy/paste bindings everywhere. Need a solution for XMonad. Setting the GTK bindings to "emacs" didn't seem to affect for Firefox, which is (by far) my primary non-Emacs window.
 
@@ -1540,9 +1543,9 @@ These seemed to cause more problems than they fixed for me.
 
 ** TODO [#C] Fix indentation in tangled files
 
-Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/home.nix][home.nix]] aren't properly indented. This is because they are split across several org blocks, and in each on I use the =nix-mode= auto-indent to fixup the indentation /within th block/. This removes the leading whitespace, so each block is tangled without leading indentation. Thankfully, Nix doesn't care, so this is purely for the aesthetics of the generated files.
+Even with =org-src-preserve-indentation= set to =t=, files like [[file:nixos/home.nix][home.nix]] aren't properly indented. This is because they are split across several org blocks, and in each on I use the =nix-mode= auto-indent to fixup the indentation /within the block/. This removes the leading whitespace, so each block is tangled without leading indentation. Thankfully, Nix doesn't care, so this is purely for the aesthetics of the generated files.
 
-Quickfix is to auto-indent the tangled files, then detangle. 
+Quickfix is to auto-indent the tangled files, then detangle.
 
 Using noweb references seems to be the best option: https://orgmode.org/manual/Noweb-Reference-Syntax.html. See "This feature can also be used for management of indentation in exported code snippets".
 
