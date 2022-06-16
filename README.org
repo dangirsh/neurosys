@@ -554,7 +554,7 @@ myShellPrompt = def
 :END:
 
 #+begin_src haskell
-myManageHook = composeAll [ className =? "zoom" --> doFloat, appName =? "Open File" --> doFloat]
+myManageHook = composeAll [ className =? "zoom " --> doFloat, appName =? "Open File" --> doFloat]
 #+end_src
 
 *** Screenshot

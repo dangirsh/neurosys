@@ -187,7 +187,7 @@ myShellPrompt = def
 -- Asthetics:1 ends here
 
 -- [[file:../../README.org::*Float certain apps][Float certain apps:1]]
-myManageHook = composeAll [ className =? "zoom" --> doFloat, appName =? "Open File" --> doFloat]
+myManageHook = composeAll [ className =? "zoom " --> doFloat, appName =? "Open File" --> doFloat]
 -- Float certain apps:1 ends here
 
 -- [[file:../../README.org::*Screenshot][Screenshot:1]]
