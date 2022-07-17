@@ -509,7 +509,7 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
 
