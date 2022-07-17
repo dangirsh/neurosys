@@ -225,6 +225,7 @@ import XMonad.Util.Run
 import Data.Monoid
 import Data.Default (def)
 import Data.Map as M (fromList,union, Map())
+import Data.List (isPrefixOf)
 #+end_src
 
 *** Main
@@ -554,7 +555,10 @@ myShellPrompt = def
 :END:
 
 #+begin_src haskell
-myManageHook = composeAll [ className =? "zoom " --> doFloat, appName =? "Open File" --> doFloat]
+myManageHook = composeAll [ className =? "zoom " --> doFloat,
+                            -- Hack for Zoom windows that don't have class name of "zoom"
+                            fmap ("join?action" `isPrefixOf`) className --> doFloat,
+                            appName =? "Open File" --> doFloat]
 #+end_src
 
 *** Screenshot
