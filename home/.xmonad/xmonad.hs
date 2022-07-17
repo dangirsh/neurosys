@@ -29,6 +29,7 @@ import XMonad.Util.Run
 import Data.Monoid
 import Data.Default (def)
 import Data.Map as M (fromList,union, Map())
+import Data.List (isPrefixOf)
 -- Imports:1 ends here
 
 -- [[file:../../README.org::*Main][Main:1]]
@@ -87,8 +88,8 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 
 -- [[file:../../README.org::*Running Emacs][Running Emacs:1]]
   , ((m, xK_n), spawn "emacsclient -c")
-  , ((m .|. shiftMask .|. mod1Mask, xK_n), spawn "~/scripts/run_emacs.sh")
-  , ((m .|. shiftMask, xK_n), spawn "EMACS_WORK_MODE=1 ~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask .|. mod1Mask, xK_n), spawn "EMACS_NON_WORK_MODE=1 ~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask, xK_n), spawn "~/scripts/run_emacs.sh")
 -- Running Emacs:1 ends here
 
 -- [[file:../../README.org::*Lock Screen][Lock Screen:1]]
@@ -153,7 +154,7 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 -- Multiple Monitors:1 ends here
 
@@ -187,7 +188,10 @@ myShellPrompt = def
 -- Asthetics:1 ends here
 
 -- [[file:../../README.org::*Float certain apps][Float certain apps:1]]
-myManageHook = composeAll [ className =? "zoom " --> doFloat, appName =? "Open File" --> doFloat]
+myManageHook = composeAll [ className =? "zoom " --> doFloat,
+                            -- Hack for Zoom windows that don't have class name of "zoom"
+                            fmap ("join?action" `isPrefixOf`) className --> doFloat,
+                            appName =? "Open File" --> doFloat]
 -- Float certain apps:1 ends here
 
 -- [[file:../../README.org::*Screenshot][Screenshot:1]]
