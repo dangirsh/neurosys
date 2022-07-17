@@ -357,8 +357,8 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
 
 #+begin_src haskell
   , ((m, xK_n), spawn "emacsclient -c")
-  , ((m .|. shiftMask .|. mod1Mask, xK_n), spawn "~/scripts/run_emacs.sh")
-  , ((m .|. shiftMask, xK_n), spawn "EMACS_WORK_MODE=1 ~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask .|. mod1Mask, xK_n), spawn "EMACS_NON_WORK_MODE=1 ~/scripts/run_emacs.sh")
+  , ((m .|. shiftMask, xK_n), spawn "~/scripts/run_emacs.sh")
 #+end_src
 
 ***** Lock Screen
