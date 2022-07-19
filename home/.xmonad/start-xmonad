@@ -16,6 +16,7 @@ sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
 # sudo timedatectl set-timezone America/Los_Angeles
 
+
 # Ensure Zoom output volume stays constant
 /home/dan/scripts/fuck_zoom.sh 100 &
 
@@ -23,7 +24,7 @@ sudo timedatectl set-timezone Europe/Berlin
 greenclip daemon &
 
 # Start espanso
-espanso restart
+# espanso restart  # broken in Ubuntu 22
 
 # set trackball rate
 # xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
@@ -32,7 +33,7 @@ espanso restart
 # safeeyes &
 
 # Wallpaper
-feh --bg-fill --randomize ~/HubbleImages/* &
+feh --bg-fill --randomize ~/Media/images/wallpaper/* &
 # xsetroot -solid black
 
 # Config in ~/.config/redshift/redshift.conf

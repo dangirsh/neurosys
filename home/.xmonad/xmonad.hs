@@ -2,6 +2,7 @@
 import XMonad
 
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.DynamicProperty (dynamicTitle)
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.UrgencyHook
@@ -54,8 +55,8 @@ main = xmonad $
   , workspaces = map show $ [1..9] ++ [0 :: Int]
   , modMask = mod4Mask  -- super key as modifier
   , keys = \c -> myKeys c `M.union` keys def c
-  , manageHook = myManageHook
-  , handleEventHook = ewmhDesktopsEventHook
+  , manageHook = myManageHook <+> manageZoomHook
+  , handleEventHook = ewmhDesktopsEventHook <+> myHandleEventHook
   , startupHook = do
       -- http://hackage.haskell.org/package/xmonad-contrib-0.16/docs/XMonad-Hooks-SetWMName.html
       setWMName "LG3D"
@@ -84,6 +85,10 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
   , ((m, xK_b), spawn "rofi -show window -show-icons -matching fuzzy")
   -- Like M-y for helm-show-kill-ring in Emacs
   , ((m, xK_y), spawn "rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'")
+  -- Text espander
+
+  , ((m .|. shiftMask .|. mod1Mask, xK_j), spawn "texpander.sh")
+  , ((m .|. shiftMask .|. mod1Mask, xK_p), spawn "rofipass")
 -- Launcher / Window Switcher:1 ends here
 
 -- [[file:../../README.org::*Running Emacs][Running Emacs:1]]
@@ -188,10 +193,32 @@ myShellPrompt = def
 -- Asthetics:1 ends here
 
 -- [[file:../../README.org::*Float certain apps][Float certain apps:1]]
-myManageHook = composeAll [ className =? "zoom " --> doFloat,
-                            -- Hack for Zoom windows that don't have class name of "zoom"
-                            fmap ("join?action" `isPrefixOf`) className --> doFloat,
-                            appName =? "Open File" --> doFloat]
+manageZoomHook =
+  composeAll $
+    [ (className =? zoomClassName) <&&> shouldFloat <$> title --> doFloat,
+      (className =? zoomClassName) <&&> shouldSink <$> title --> doSink
+    ]
+  where
+    zoomClassName = "zoom"
+    tileTitles =
+      [ "Zoom - Free Account", -- main window
+        "Zoom - Licensed Account", -- main window
+        "Zoom", -- meeting window on creation
+        "Zoom Meeting" -- meeting window shortly after creation
+      ]
+    shouldFloat title = title `notElem` tileTitles
+    shouldSink title = title `elem` tileTitles
+    doSink = (ask >>= doF . W.sink) <+> doF W.swapDown
+
+myHandleEventHook =
+  mconcat
+    [ dynamicTitle manageZoomHook,
+      handleEventHook defaultConfig
+    ]
+
+
+myManageHook = composeAll [ appName =? "Open Files" --> doFloat,
+                            className =? "zenity" --> doFloat]
 -- Float certain apps:1 ends here
 
 -- [[file:../../README.org::*Screenshot][Screenshot:1]]
