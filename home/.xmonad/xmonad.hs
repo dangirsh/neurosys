@@ -129,8 +129,8 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- Easier Kill Binding:1 ends here
 
 -- [[file:../../README.org::*Volume Control][Volume Control:1]]
-  , ((m .|. shiftMask, xK_Up), spawn "amixer sset Master 5%+")
-  , ((m .|. shiftMask, xK_Down),spawn "amixer sset Master 5%-")
+  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 1 -q set Master 2dB+ unmute")
+  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 1 -q set Master 2dB- unmute")
 -- Volume Control:1 ends here
 
 -- [[file:../../README.org::*Screenshots][Screenshots:1]]
@@ -146,9 +146,9 @@ myKeys XConfig {modMask = m, terminal = term} = M.fromList $ [
 -- Keyboard:1 ends here
 
 -- [[file:../../README.org::*Arandr][Arandr:1]]
-  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
-  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
-  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
+  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/* &" )
+  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
+  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
 -- Arandr:1 ends here
 
 -- [[file:../../README.org::*Cycle Recent Workspace][Cycle Recent Workspace:1]]
@@ -218,7 +218,7 @@ myHandleEventHook =
 
 
 myManageHook = composeAll [ appName =? "Open Files" --> doFloat,
-                            className =? "zenity" --> doFloat]
+                            className =? "Zenity" --> doFloat]
 -- Float certain apps:1 ends here
 
 -- [[file:../../README.org::*Screenshot][Screenshot:1]]

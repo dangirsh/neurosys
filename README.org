@@ -450,11 +450,11 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
 :ID:       49308b27-b641-4e31-b811-b4bad6e740dd
 :END:
 
-I don't run a desktop environment, so the volume buttons on my keyboard don't do anything.
+I don't run a desktop environment, so the volume buttons on my keyboard don't do anything by default.
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_Up), spawn "amixer sset Master 5%+")
-  , ((m .|. shiftMask, xK_Down),spawn "amixer sset Master 5%-")
+  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 1 -q set Master 2dB+ unmute")
+  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 1 -q set Master 2dB- unmute")
 #+end_src
 
 ***** Screenshots
@@ -489,9 +489,9 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr scripts are for my desk / laptop.
 
 #+begin_src haskell
-  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
-  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
-  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --randomize ~/HubbleImages/* &" )
+  , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/* &" )
+  , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
+  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
 #+end_src
 
 ***** Cycle Recent Workspace
@@ -586,7 +586,7 @@ myHandleEventHook =
 
 
 myManageHook = composeAll [ appName =? "Open Files" --> doFloat,
-                            className =? "zenity" --> doFloat]
+                            className =? "Zenity" --> doFloat]
 #+end_src
 
 *** Screenshot
@@ -648,11 +648,13 @@ greenclip daemon &
 # safeeyes &
 
 # Wallpaper
-feh --bg-fill --randomize ~/Media/images/wallpaper/* &
+feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
 # xsetroot -solid black
 
 # Config in ~/.config/redshift/redshift.conf
 redshift &
+
+picom -b
 
 # Now, finally, start xmonad
 exec xmonad

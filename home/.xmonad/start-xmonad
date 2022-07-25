@@ -16,7 +16,6 @@ sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/New_York
 # sudo timedatectl set-timezone America/Los_Angeles
 
-
 # Ensure Zoom output volume stays constant
 /home/dan/scripts/fuck_zoom.sh 100 &
 
@@ -33,11 +32,13 @@ greenclip daemon &
 # safeeyes &
 
 # Wallpaper
-feh --bg-fill --randomize ~/Media/images/wallpaper/* &
+feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
 # xsetroot -solid black
 
 # Config in ~/.config/redshift/redshift.conf
 redshift &
+
+picom -b
 
 # Now, finally, start xmonad
 exec xmonad
