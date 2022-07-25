@@ -452,6 +452,7 @@ They are bound by default to ~mod+~, and ~mod+.~, but ~mod+,~ is much more usefu
 
 I don't run a desktop environment, so the volume buttons on my keyboard don't do anything by default.
 
+
 #+begin_src haskell
   , ((m .|. shiftMask, xK_Up), spawn "amixer -c 1 -q set Master 2dB+ unmute")
   , ((m .|. shiftMask, xK_Down),spawn "amixer -c 1 -q set Master 2dB- unmute")
