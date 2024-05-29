@@ -352,7 +352,6 @@ I currently use [[https://github.com/davatorium/rofi][rofi]] to run programs or 
   -- Text espander
 
   , ((m .|. shiftMask .|. mod1Mask, xK_j), spawn "texpander.sh")
-  , ((m .|. shiftMask .|. mod1Mask, xK_p), spawn "rofipass")
 #+end_src
 
 
@@ -454,8 +453,8 @@ I don't run a desktop environment, so the volume buttons on my keyboard don't do
 
 
 #+begin_src haskell
-  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 1 -q set Master 2dB+ unmute")
-  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 1 -q set Master 2dB- unmute")
+  , ((m .|. shiftMask, xK_Up), spawn "amixer -c 0 -q set Master 2dB+ unmute")
+  , ((m .|. shiftMask, xK_Down),spawn "amixer -c 0 -q set Master 2dB- unmute")
 #+end_src
 
 ***** Screenshots
@@ -492,10 +491,12 @@ I have =main.sh= and =laptop.sh= symlinked to whatever the current xrandr script
 #+begin_src haskell
   , ((m, xK_s), spawn "/home/dan/.screenlayout/main.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/* &" )
   , ((m .|. shiftMask, xK_s), spawn "/home/dan/.screenlayout/laptop.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
-  , ((m .|. shiftMask .|. mod1Mask, xK_s), spawn "/home/dan/.screenlayout/secondary.sh && feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*" )
 #+end_src
 
 ***** Cycle Recent Workspace
+:PROPERTIES:
+:ID:       922f15e3-b35f-4949-a379-36f70a3dfd3d
+:END:
 
 #+begin_src haskell
   , ((m .|. shiftMask, xK_Tab), cycleRecentWS [xK_Super_L] xK_Tab xK_BackSpace)
@@ -516,9 +517,10 @@ The functionality here is a primary reason for choosing XMonad: a natural, keybo
   ] ++
   [((m .|. nilOrShift, key), screenWorkspace sc
           >>= flip whenJust (windows . f))
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+       | (key, sc) <- zip [xK_w, xK_r, xK_e] [0..]
        , (f, nilOrShift) <- [(W.view, 0), (W.shift, shiftMask)]]
 #+end_src
+
 
 ****** TODO Try XMonad.Actions.PhysicalScreens to order =mod-{w, e, r}= based on physical screen layout
 
@@ -625,6 +627,7 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export GDK_SCALE=1
 
 setxkbmap -option 'ctrl:nocaps'
+setxkbmap us -variant colemak_dh
 
 # set keyboard rate
 xset r rate 160 80
@@ -634,7 +637,7 @@ sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
-/home/dan/scripts/fuck_zoom.sh 100 &
+# /home/dan/scripts/fuck_zoom.sh 100 &
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
@@ -643,7 +646,7 @@ greenclip daemon &
 # espanso restart  # broken in Ubuntu 22
 
 # set trackball rate
-# xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
+xinput --set-prop "Primax Kensington Eagle Trackball" "libinput Accel Speed" 1 || true
 
 # eye breaks
 # safeeyes &
@@ -656,6 +659,10 @@ feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
 redshift &
 
 picom -b
+
+eval $(ssh-agent)
+
+syncthing serve &
 
 # Now, finally, start xmonad
 exec xmonad

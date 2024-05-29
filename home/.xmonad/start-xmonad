@@ -8,6 +8,7 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export GDK_SCALE=1
 
 setxkbmap -option 'ctrl:nocaps'
+setxkbmap us -variant colemak_dh
 
 # set keyboard rate
 xset r rate 160 80
@@ -17,7 +18,7 @@ sudo timedatectl set-timezone Europe/Berlin
 # sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
-/home/dan/scripts/fuck_zoom.sh 100 &
+# /home/dan/scripts/fuck_zoom.sh 100 &
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
@@ -26,7 +27,7 @@ greenclip daemon &
 # espanso restart  # broken in Ubuntu 22
 
 # set trackball rate
-# xinput --set-prop "Primax Kensington Eagle Trackball" "Device Accel Constant Deceleration" 3 || true
+xinput --set-prop "Primax Kensington Eagle Trackball" "libinput Accel Speed" 1 || true
 
 # eye breaks
 # safeeyes &
@@ -39,6 +40,10 @@ feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
 redshift &
 
 picom -b
+
+eval $(ssh-agent)
+
+syncthing serve &
 
 # Now, finally, start xmonad
 exec xmonad
