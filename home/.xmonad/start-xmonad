@@ -12,25 +12,21 @@ setxkbmap us -variant colemak_dh
 
 # set keyboard rate
 xset r rate 160 80
+# sudo timedatectl set-timezone Europe/Berlin
+#sudo timedatectl set-timezone America/New_York
+#sudo timedatectl set-timezone Atlantic/Madeira
+sudo timedatectl set-timezone America/Los_Angeles
 
-sudo timedatectl set-timezone Europe/Berlin
-# sudo timedatectl set-timezone America/New_York
-# sudo timedatectl set-timezone America/Los_Angeles
 
 # Ensure Zoom output volume stays constant
-# /home/dan/scripts/fuck_zoom.sh 100 &
+/home/dan/scripts/fuck_zoom.sh 100 &
+$HOME/scripts/configure_laptop_keeboard.sh
 
 # Clipboard manager (used with rofi)
 greenclip daemon &
 
-# Start espanso
-# espanso restart  # broken in Ubuntu 22
-
 # set trackball rate
 xinput --set-prop "Primax Kensington Eagle Trackball" "libinput Accel Speed" 1 || true
-
-# eye breaks
-# safeeyes &
 
 # Wallpaper
 feh --bg-fill --no-xinerama --randomize ~/Media/images/wallpaper/*
@@ -41,7 +37,9 @@ redshift &
 
 picom -b
 
+export SSH_ASKPASS=/usr/bin/ssh-askpass
 eval $(ssh-agent)
+ssh-add ~/.ssh/id_ed25519
 
 syncthing serve &
 
